@@ -2,120 +2,92 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Responsiva Pro - 9:16</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Página Full Screen 9:16</title>
     <style>
-        /* 1. RESET Y BASE */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: #0f0f0f;
-            font-family: 'Segoe UI', sans-serif;
+            background-color: #000;
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100dvh;
-            color: white;
-            overflow: hidden; /* Evita scrolls raros en PC */
+            overflow: hidden;
         }
 
-        /* 2. EL CONTENEDOR 9:16 (CENTRO) */
-        .pantalla-celular {
+        /* EL TRUCO: El contenedor ocupa TODO el móvil, pero mantiene la lógica 9:16 para los botones */
+        .main-wrapper {
             position: relative;
+            width: 100%;
             height: 100dvh;
-            aspect-ratio: 9 / 16;
-            background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop'); 
+            max-width: 56.25vh; /* Esto equivale a 9/16 de la altura total */
+            background-image: url('tu-imagen.jpg'); /* REEMPLAZAR AQUÍ */
             background-size: cover;
             background-position: center;
-            box-shadow: 0 0 50px rgba(0,0,0,1);
-            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 100px rgba(0,0,0,0.5);
         }
 
-        /* 3. BOTONES (SIEMPRE RELATIVOS A LA IMAGEN) */
+        /* Ajuste para que en celulares se vea realmente Full Screen sin bordes */
+        @media (max-aspect-ratio: 9/16) {
+            .main-wrapper {
+                max-width: 100vw;
+            }
+        }
+
         .boton-menu {
             position: absolute;
-            width: 70%;
-            padding: 15px;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px); /* Efecto de vidrio */
-            border: 1px solid rgba(255,255,255,0.3);
+            width: 75%;
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.4);
             color: white;
-            border-radius: 12px;
+            border-radius: 50px;
+            font-size: 1rem;
             font-weight: bold;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: 0.3s;
         }
 
-        .boton-menu:hover { background: rgba(255, 255, 255, 0.3); }
+        /* Ubicaciones exactas en la imagen */
+        .btn-1 { top: 40%; }
+        .btn-2 { top: 52%; }
+        .btn-3 { top: 64%; }
 
-        /* Coordenadas fijas sobre la imagen */
-        .btn-1 { top: 45%; }
-        .btn-2 { top: 55%; }
-        .btn-3 { top: 65%; }
-
-        /* 4. ELEMENTOS LATERALES (OCULTOS EN CELULAR) */
-        .info-lateral {
-            display: none; /* Se oculta por defecto */
+        /* Contenido lateral solo para PC */
+        .lateral {
+            display: none;
             position: absolute;
-            width: 250px;
-            padding: 20px;
+            color: #444;
+            font-size: 0.8rem;
+            width: 200px;
         }
 
-        .info-derecha { right: 5%; text-align: left; }
-        .info-izquierda { left: 5%; text-align: right; }
-
-        .info-lateral h2 { color: #ff3e3e; margin-bottom: 10px; }
-        .info-lateral p { font-size: 0.9rem; opacity: 0.8; }
-
-        /* 5. MAGIA PARA PC (MEDIA QUERIES) */
         @media (min-width: 1024px) {
-            body {
-                /* Fondo decorativo solo para PC */
-                background: radial-gradient(circle, #222 0%, #000 100%);
-            }
-
-            .info-lateral {
-                display: block; /* Aparece en pantallas grandes */
-                animation: fadeIn 1.5s ease;
-            }
-
-            /* Efecto de marco para resaltar el "celular" */
-            .pantalla-celular {
-                height: 90dvh; /* En PC se ve un poco más pequeño para que parezca un celular real */
-                border: 8px solid #333;
-                border-radius: 30px;
-            }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            .lateral { display: block; }
+            .lat-izq { left: 5%; text-align: right; }
+            .lat-der { right: 5%; text-align: left; }
         }
     </style>
 </head>
 <body>
 
-    <div class="info-lateral info-izquierda">
-        <h2>SOBRE NOSOTROS</h2>
-        <p>Esta es una experiencia diseñada para móviles que ahora puedes disfrutar en pantalla grande.</p>
+    <div class="lateral lat-izq">Experiencia Vertical v1.0<br>Diseño Optimizado</div>
+
+    <div class="main-wrapper">
+        <button class="boton-menu btn-1">Comenzar</button>
+        <button class="boton-menu btn-2">Galería Pro</button>
+        <button class="boton-menu btn-3">Contacto</button>
     </div>
 
-    <div class="pantalla-celular">
-        <button class="boton-menu btn-1">NUESTROS SERVICIOS</button>
-        <button class="boton-menu btn-2">VER PORTAFOLIO</button>
-        <button class="boton-menu btn-3">CONTACTO DIRECTO</button>
-    </div>
-
-    <div class="info-lateral info-derecha">
-        <h2>SÍGUENOS</h2>
-        <p>Instagram: @TuMarca<br>TikTok: @TuMarca</p>
-    </div>
+    <div class="lateral lat-der">Desliza para explorar<br>© 2024 Tu Marca</div>
 
 </body>
 </html>
