@@ -3,456 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fiesta Celina & Valentina</title>
-    
-    <!-- Librerï¿½as Externas -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-    
-    <!-- Fuentes -->
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-
+    <title>Web Responsiva Pro - 9:16</title>
     <style>
+        /* 1. RESET Y BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #050505;
-            color: white;
-            font-family: 'Montserrat', sans-serif;
-            overflow: hidden; /* Evitar scroll mientras animamos */
-        }
-
-        /* Contenedor Principal estilo Mï¿½vil/Flyer */
-        #app-container {
-            position: relative;
-            width: 100%;
-            max-width: 480px; /* Ancho tï¿½pico de flyer/mï¿½vil */
-            height: 100vh;
-            margin: 0 auto;
-            overflow: hidden;
-            /* SE ELIMINARON LOS BORDES Y SOMBRAS LATERALES AQUï¿½ */
-            /* box-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff; */
-            /* border-left: 2px solid rgba(255, 0, 255, 0.5); */
-            /* border-right: 2px solid rgba(0, 255, 255, 0.5); */
-        }
-
-        /* Pantallas */
-        .screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            background-color: #0f0f0f;
+            font-family: 'Segoe UI', sans-serif;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s ease;
-            z-index: 10;
+            min-height: 100dvh;
+            color: white;
+            overflow: hidden; /* Evita scrolls raros en PC */
         }
 
-        .active-screen {
-            opacity: 1;
-            visibility: visible;
-            z-index: 20;
-        }
-
-        /* Fondo del Menï¿½ Principal */
-        .bg-main {
-            background-image: url('fondo.jpg');
+        /* 2. EL CONTENEDOR 9:16 (CENTRO) */
+        .pantalla-celular {
+            position: relative;
+            height: 100dvh;
+            aspect-ratio: 9 / 16;
+            background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop'); 
             background-size: cover;
             background-position: center;
-            background-repeat: no-repeat;
+            box-shadow: 0 0 50px rgba(0,0,0,1);
+            z-index: 2;
         }
 
-        /* Fondos de Invitaciones Internas */
-        .bg-subpage {
-            background: radial-gradient(circle at center, #1a0b2e 0%, #000000 100%);
-            background-image: 
-                radial-gradient(circle at center, #1a0b2e 0%, #000000 100%),
-                url('https://www.transparenttextures.com/patterns/stardust.png');
-        }
-
-        /* Partï¿½culas */
-        #particles-container {
+        /* 3. BOTONES (SIEMPRE RELATIVOS A LA IMAGEN) */
+        .boton-menu {
             position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 50; /* Z-index alto para flotar sobre todo */
-            overflow: hidden;
-        }
-        .particle {
-            position: absolute;
-            opacity: 0.8;
-            box-shadow: 0 0 10px currentColor;
-        }
-
-        .neon-text {
-            text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px #ff00de, 0 0 30px #ff00de;
-        }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-        }
-
-        /* Animaciï¿½n del Disco de Mï¿½sica */
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .music-spin {
-            animation: spin 3s linear infinite;
-        }
-
-        /* --- NUEVOS ESTILOS PARA SVG --- */
-        .svg-interactive-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 40; /* Por encima del fondo */
-        }
-
-        /* Estilos hover para las formas SVG */
-        .svg-shape {
-            transition: all 0.3s ease;
+            width: 70%;
+            padding: 15px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px); /* Efecto de vidrio */
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 12px;
+            font-weight: bold;
             cursor: pointer;
-        }
-        
-        /* Grupo Hover: Cuando pasas el mouse sobre el grupo, afecta a la forma y al texto */
-        .svg-group:hover .svg-shape {
-            filter: drop-shadow(0 0 15px rgba(255, 0, 255, 0.8));
-            fill: rgba(255, 0, 255, 0.3); /* Mï¿½s visible al hover */
+            transition: all 0.3s;
         }
 
-        /* Hover especï¿½fico para Valentina (Rojo) */
-        .svg-group-valentina:hover .svg-shape {
-             filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.8));
-             fill: rgba(255, 0, 0, 0.2);
+        .boton-menu:hover { background: rgba(255, 255, 255, 0.3); }
+
+        /* Coordenadas fijas sobre la imagen */
+        .btn-1 { top: 45%; }
+        .btn-2 { top: 55%; }
+        .btn-3 { top: 65%; }
+
+        /* 4. ELEMENTOS LATERALES (OCULTOS EN CELULAR) */
+        .info-lateral {
+            display: none; /* Se oculta por defecto */
+            position: absolute;
+            width: 250px;
+            padding: 20px;
         }
 
-        /* Animaciï¿½n de destello para los bordes del botï¿½n cuadrado */
-        @keyframes border-flash {
-            0%, 100% { opacity: 0.4; stroke-width: 2; }
-            50% { opacity: 1; stroke-width: 3; filter: drop-shadow(0 0 8px #ff00ff); }
-        }
-        .flashing-border {
-            animation: border-flash 2s infinite ease-in-out;
+        .info-derecha { right: 5%; text-align: left; }
+        .info-izquierda { left: 5%; text-align: right; }
+
+        .info-lateral h2 { color: #ff3e3e; margin-bottom: 10px; }
+        .info-lateral p { font-size: 0.9rem; opacity: 0.8; }
+
+        /* 5. MAGIA PARA PC (MEDIA QUERIES) */
+        @media (min-width: 1024px) {
+            body {
+                /* Fondo decorativo solo para PC */
+                background: radial-gradient(circle, #222 0%, #000 100%);
+            }
+
+            .info-lateral {
+                display: block; /* Aparece en pantallas grandes */
+                animation: fadeIn 1.5s ease;
+            }
+
+            /* Efecto de marco para resaltar el "celular" */
+            .pantalla-celular {
+                height: 90dvh; /* En PC se ve un poco más pequeño para que parezca un celular real */
+                border: 8px solid #333;
+                border-radius: 30px;
+            }
         }
 
-        /* Animaciï¿½n de levitaciï¿½n para iconos */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .floating-icon {
-            animation: float 4s ease-in-out infinite;
-        }
-        .delay-1 { animation-delay: 0s; }
-        .delay-2 { animation-delay: 1.5s; }
-        .delay-3 { animation-delay: 0.8s; }
-        .delay-4 { animation-delay: 2.2s; }
-
     </style>
 </head>
 <body>
 
-    <!-- Audio de Fondo -->
-    <audio id="bg-music" loop>
-        <source src="musica.mp3" type="audio/mpeg">
-    </audio>
-
-    <div id="app-container">
-        
-        <!-- Control de Mï¿½sica -->
-        <div class="absolute top-6 right-6 z-[60] cursor-pointer group" onclick="toggleMusic()">
-            <div class="relative w-12 h-12 flex items-center justify-center bg-black/40 backdrop-blur-sm rounded-full border border-pink-500/50 shadow-[0_0_15px_rgba(236,72,153,0.5)] transition group-hover:bg-pink-900/40">
-                <i id="music-icon" class="fas fa-compact-disc text-pink-400 text-2xl transition-all"></i>
-                <i class="fas fa-music text-blue-300 text-xs absolute -top-1 -right-1 animate-bounce"></i>
-            </div>
-        </div>
-
-        <!-- Contenedor de Partï¿½culas -->
-        <div id="particles-container"></div>
-
-        <!-- PANTALLA 1: MENï¿½ PRINCIPAL (CON SVG) -->
-        <div id="home-screen" class="screen active-screen bg-main">
-            <div class="absolute inset-0 bg-black/10"></div>
-
-            <!-- ICONOS FLOTANTES SUPERIORES (Simulando PNGs pequeï¿½os) -->
-            <div class="absolute top-[10%] left-0 w-full flex justify-around pointer-events-none z-30 px-8">
-                <!-- Icono 1: Globos -->
-                <div class="floating-icon delay-1 text-center opacity-80">
-                    <i class="fas fa-balloons text-4xl text-pink-500 drop-shadow-[0_0_10px_rgba(236,72,153,0.8)]"></i>
-                </div>
-                <!-- Icono 2: Copas -->
-                <div class="floating-icon delay-2 text-center opacity-80 mt-8">
-                    <i class="fas fa-glass-cheers text-3xl text-cyan-400 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]"></i>
-                </div>
-                <!-- Icono 3: Regalo -->
-                <div class="floating-icon delay-3 text-center opacity-80">
-                    <i class="fas fa-gift text-4xl text-purple-500 drop-shadow-[0_0_10px_rgba(168,85,247,0.8)]"></i>
-                </div>
-                 <!-- Icono 4: Nota Musical -->
-                 <div class="floating-icon delay-4 text-center opacity-80 mt-6">
-                    <i class="fas fa-music text-3xl text-yellow-300 drop-shadow-[0_0_10px_rgba(253,224,71,0.8)]"></i>
-                </div>
-            </div>
-
-            <!-- 
-               SISTEMA DE COORDENADAS SVG 
-            -->
-            <svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice" class="svg-interactive-layer">
-                
-                <!-- BOTï¿½N 1: INVITACIï¿½N (Rectï¿½ngulo Abierto) -->
-                <g class="svg-group cursor-pointer" onclick="goToPage('celina-screen')">
-                    
-                    <!-- 
-                        NUEVO DISEï¿½O: Solo bordes superior e inferior (tipo rectï¿½ngulo abierto)
-                        Coordenadas: X va de 60 a 340 (ancho rectangular)
-                        Y superior: 460
-                        Y inferior: 520
-                    -->
-                    
-                    <!-- Lï¿½nea Superior -->
-                    <line x1="60" y1="540" x2="340" y2="540" 
-                          class="flashing-border stroke-fuchsia-500" 
-                          stroke-linecap="round" />
-                          
-                    <!-- Lï¿½nea Inferior -->
-                    <line x1="60" y1="590" x2="340" y2="590" 
-                          class="flashing-border stroke-fuchsia-500" 
-                          stroke-linecap="round" />
-
-                    <!-- Zona de click transparente (para que sea fï¿½cil hacer click en medio) -->
-                    <rect x="60" y="530" width="280" height="60" fill="transparent" />
-                    
-                    <!-- Texto dentro del SVG -->
-                    <text x="200" y="580" text-anchor="middle" 
-                          class="svg-text-anim font-['Anton'] fill-white text-4xl select-none pointer-events-none" 
-                          style="text-shadow: 0 0 10px #d946ef; letter-spacing: 2px;">
-                        INVITACIï¿½N
-                    </text>
-                </g>
-
-
-                <!-- BOTï¿½N 2: VALENTINA (Pï¿½ldora / Rectï¿½ngulo Redondeado) -->
-                <g class="svg-group svg-group-valentina cursor-pointer" onclick="goToPage('valentina-screen')">
-                    <rect x="80" y="602" width="240" height="60" rx="35"
-                          class="svg-shape fill-transparent stroke-red-500/60 stroke-2" />
-                </g>
-
-            </svg>
-        </div>
-
-        <!-- PANTALLA 2: INVITACIï¿½N CELINA -->
-        <div id="celina-screen" class="screen bg-subpage p-6">
-            <div class="glass-card w-full max-w-sm p-8 text-center border-t-4 border-purple-500 shadow-[0_0_30px_rgba(168,85,247,0.3)] content-anim">
-                <h1 class="text-6xl font-['Anton'] text-transparent bg-clip-text bg-gradient-to-b from-purple-300 to-purple-600 mb-2">INVITACIÃ“N</h1>
-                <h2 class="text-2xl font-bold text-white mb-6 tracking-widest">CELINA FLORES</h2>
-                
-                <div class="space-y-4 text-gray-200 mb-8">
-                    <div class="flex items-center justify-center gap-3">
-                        <i class=""></i>
-                        <span class="text-lg">Quedas cordialmente invitado a mi fiesta, agradesco de todo corazon<br>
-                        que me acompaÃ±es en esta fiesta tan importante para mi</span>
-                    </div>
-                    <div class="flex items-center justify-center gap-3">
-                        <i class="fas fa-calendar-alt text-purple-400"></i>
-                        <span class="text-lg">Sera este Domingo 8 de Febrero - 2026</span>
-                    </div>
-                    <div class="flex items-center justify-center gap-3">
-                        <i class="fas fa-clock text-purple-400"></i>
-                        <span class="text-lg">a HRS 15:00 </span>
-                    </div>
-                    <div class="flex items-center justify-center gap-3">
-                        <i class="fas fa-map-marker-alt text-purple-400"></i>
-                        <span class="text-sm">Av. Simon Bolivar #123, SalÃ³n BURANO </span>
-                    </div>
-                </div>
-
-                <div class="p-3 border border-purple-500/50 rounded-lg bg-black/40 mb-6">
-                    <p class="text-xs text-purple-300 uppercase tracking-widest">Ticket Policy</p>
-                    <p class="text-white font-bold">ACCESO CON QR</p>
-                </div>
-
-                <button onclick="goBack()" class="bg-white text-purple-900 px-8 py-3 rounded-full font-bold hover:bg-purple-100 transition shadow-lg w-full">
-                    <i class="fas fa-arrow-left mr-2"></i> VOLVER AL MENÃš
-                </button>
-            </div>
-        </div>
-
-        <!-- PANTALLA 3: INVITACIï¿½N VALENTINA -->
-        <div id="valentina-screen" class="screen bg-subpage p-6">
-            <div class="glass-card w-full max-w-sm p-8 text-center border-t-4 border-red-500 shadow-[0_0_30px_rgba(220,38,38,0.3)] content-anim">
-                <div class="mb-4 inline-block p-3 rounded-full bg-red-600/20 border border-red-500">
-                    <i class="fas fa-birthday-cake text-3xl text-red-500"></i>
-                </div>
-                
-                <h1 class="text-5xl font-['Anton'] text-white mb-2 neon-text">INVITACION</h1>
-                <p class="text-xl text-red-300 mb-6 font-bold">VALENTINA</p>
-                
-                <div class="space-y-4 text-gray-200 mb-8 font-light">
-                    <p class="italic">"Acompï¿½ï¿½ame a celebrar un dï¿½a lleno de magia y diversiï¿½n."</p>
-                    <hr class="border-red-500/30 w-1/2 mx-auto">
-                    <div class="grid grid-cols-2 gap-4 text-sm">
-                        <div class="bg-red-900/30 p-2 rounded">
-                            <span class="block text-red-400 font-bold">Dï¿½A</span>
-                            8 FEB
-                        </div>
-                        <div class="bg-red-900/30 p-2 rounded">
-                            <span class="block text-red-400 font-bold">HORA</span>
-                            17:00
-                        </div>
-                    </div>
-                </div>
-
-                <button onclick="goBack()" class="bg-gradient-to-r from-red-600 to-orange-600 text-white px-8 py-3 rounded-full font-bold hover:brightness-110 transition shadow-lg w-full">
-                    <i class="fas fa-arrow-left mr-2"></i> REGRESAR
-                </button>
-            </div>
-        </div>
-
+    <div class="info-lateral info-izquierda">
+        <h2>SOBRE NOSOTROS</h2>
+        <p>Esta es una experiencia diseñada para móviles que ahora puedes disfrutar en pantalla grande.</p>
     </div>
 
-    <script>
-        // --- 1. CONFIGURACIï¿½N DE PARTï¿½CULAS (GSAP) ---
-        const particleContainer = document.getElementById('particles-container');
-        const colors = ['#ff00ff', '#00ffff', '#ffff00', '#ff0055', '#cc00ff', '#ffffff'];
+    <div class="pantalla-celular">
+        <button class="boton-menu btn-1">NUESTROS SERVICIOS</button>
+        <button class="boton-menu btn-2">VER PORTAFOLIO</button>
+        <button class="boton-menu btn-3">CONTACTO DIRECTO</button>
+    </div>
 
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            
-            const size = Math.random() * 8 + 4;
-            const color = colors[Math.floor(Math.random() * colors.length)];
-            const startX = Math.random() * 100;
-            const isSquare = Math.random() > 0.5;
-            
-            particle.style.width = `${size}px`;
-            particle.style.height = `${size}px`;
-            particle.style.backgroundColor = color;
-            particle.style.left = `${startX}%`;
-            particle.style.bottom = '-20px';
-            particle.style.borderRadius = isSquare ? '0%' : '50%';
-            
-            particleContainer.appendChild(particle);
+    <div class="info-lateral info-derecha">
+        <h2>SÍGUENOS</h2>
+        <p>Instagram: @TuMarca<br>TikTok: @TuMarca</p>
+    </div>
 
-            gsap.to(particle, {
-                y: - (window.innerHeight + 100),
-                x: (Math.random() - 0.5) * 200,
-                rotation: Math.random() * 720,
-                opacity: 0,
-                duration: Math.random() * 3 + 4,
-                ease: "power1.out",
-                onComplete: () => {
-                    particle.remove();
-                }
-            });
-        }
-        setInterval(createParticle, 150);
-
-
-        // --- 2. NAVEGACIï¿½N Y TRANSICIONES ---
-        let currentScreen = 'home-screen';
-
-        function goToPage(targetId) {
-            const currentEl = document.getElementById(currentScreen);
-            const targetEl = document.getElementById(targetId);
-
-            const tl = gsap.timeline();
-
-            // Salida
-            tl.to(currentEl, {
-                duration: 0.4,
-                opacity: 0,
-                scale: 1.1,
-                filter: "blur(10px)",
-                ease: "power2.in",
-                onComplete: () => {
-                    currentEl.classList.remove('active-screen');
-                    targetEl.classList.add('active-screen');
-                    
-                    gsap.set(targetEl, { opacity: 0, scale: 0.9, filter: "blur(10px)" });
-                    if(targetId !== 'home-screen') {
-                        gsap.set(targetEl.querySelector('.content-anim'), { y: 100, opacity: 0 });
-                    }
-                }
-            });
-
-            // Entrada
-            tl.to(targetEl, {
-                duration: 0.5,
-                opacity: 1,
-                scale: 1,
-                filter: "blur(0px)",
-                ease: "power2.out"
-            });
-
-            // Contenido interno
-            if(targetId !== 'home-screen') {
-                tl.to(targetEl.querySelector('.content-anim'), {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.4,
-                    ease: "back.out(1.5)"
-                }, "-=0.3");
-            }
-
-            currentScreen = targetId;
-        }
-
-        function goBack() {
-            goToPage('home-screen');
-        }
-
-        // --- 3. ANIMACIONES SVG ---
-        window.onload = () => {
-            // Animaciï¿½n "latido" para el texto SVG "INVITACIï¿½N"
-            gsap.to('.svg-text-anim', {
-                scale: 1.05,
-                transformOrigin: "center center", // Asegura que escale desde el centro del texto
-                textShadow: "0 0 25px #ff00ff",
-                duration: 0.8,
-                repeat: -1,
-                yoyo: true,
-                ease: "sine.inOut"
-            });
-        };
-
-        // --- 4. CONTROL DE AUDIO ---
-        const audio = document.getElementById('bg-music');
-        const musicIcon = document.getElementById('music-icon');
-        let isPlaying = false;
-
-        function toggleMusic() {
-            if (audio.paused) {
-                audio.volume = 0.6;
-                const playPromise = audio.play();
-                
-                if (playPromise !== undefined) {
-                    playPromise.then(_ => {
-                        musicIcon.classList.add('music-spin');
-                        musicIcon.style.opacity = "1";
-                        isPlaying = true;
-                    })
-                    .catch(error => {
-                        console.log("Error al reproducir audio:", error);
-                        alert("Por favor interactï¿½a con la pï¿½gina para activar el sonido.");
-                    });
-                }
-            } else {
-                audio.pause();
-                musicIcon.classList.remove('music-spin');
-                musicIcon.style.opacity = "0.5";
-                isPlaying = false;
-            }
-        }
-    </script>
 </body>
 </html>
