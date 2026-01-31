@@ -2,10 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- Viewport optimizado para evitar zoom y asegurar escala correcta -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Invitación Doble - Celina & Valentina</title>
-    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- GSAP for Animations -->
@@ -24,65 +22,44 @@
         }
 
         body {
-            background-color: #050505;
+            background-color: #111;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Evita scroll en el body, solo dentro del wrapper si es necesario */
+            overflow: hidden;
             font-family: 'Montserrat', sans-serif;
             color: #333;
-            /* Centrado en PC */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
         }
 
-        /* --- FONDO DECORATIVO PC (Blur) --- */
+        /* --- ESTRUCTURA PRINCIPAL --- */
         .pc-decoration {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: 0;
             background-image: url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1920&auto=format&fit=crop');
             background-size: cover;
-            background-position: center;
-            filter: blur(15px) brightness(0.3);
+            filter: blur(8px) brightness(0.4);
         }
 
-        /* --- CONTENEDOR PRINCIPAL (REGLAS TÉCNICAS) --- */
         .main-wrapper {
             position: relative;
             z-index: 10;
-            
-            /* Altura dinámica exacta del viewport */
-            height: 100dvh; 
-            
-            /* Lógica para mantener proporción 9:16 en pantallas anchas */
-            width: 56.25vh; /* (9 / 16) * 100 = 56.25 */
-            
+            margin: 0 auto;
+            height: 100dvh;
+            width: 100vh;
+            max-width: 56.25vh; /* 9:16 PC */
             background-color: #000;
-            /* Placeholder oscuro elegante por si falla la imagen */
-            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1618331835717-801e976710b2?q=80&w=1000&auto=format&fit=crop'); 
-            /* Si tienes tu imagen local, descomenta la siguiente línea: */
-            /* background-image: url('fondo.jpg'); */
-
-            /* REGLA: Cover y Center */
+            background-image: url('fondo.jpg'); 
             background-size: cover;
             background-position: center;
-            
             box-shadow: 0 0 50px rgba(0,0,0,0.8);
             overflow: hidden;
         }
 
-        /* --- MEDIA QUERY PARA MÓVILES (Full Screen) --- */
-        /* Si la pantalla es más alta que ancha (ratio típico de móvil vertical), ocupa todo el ancho */
         @media (max-aspect-ratio: 9/16) {
             .main-wrapper {
                 width: 100vw;
                 max-width: none;
                 border: none;
-                box-shadow: none;
             }
-            /* Ocultar decoración de fondo en móvil para rendimiento */
-            .pc-decoration { display: none; }
         }
 
         /* --- PARTICULAS & DECORACIÓN --- */
@@ -126,7 +103,7 @@
         .page-view {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column;
-            overflow-y: auto; /* Scroll interno si el contenido es largo */
+            overflow-y: auto;
             background: rgba(255,255,255,0.95);
             opacity: 0; visibility: hidden; pointer-events: none;
         }
@@ -138,34 +115,27 @@
 
         /* Fondo específico para Menú Celina */
         #view-menu {
-            /* Placeholder elegante */
-            background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.9)), url('https://images.unsplash.com/photo-1519225421980-715cb0202128?q=80&w=1000&auto=format&fit=crop');
-            /* background: url('fondocelina2.jpg') center/cover; */
-            background-size: cover;
-            background-position: center;
+            background: url('fondocelina2.jpg') center/cover;
         }
-        
+        /* Fondo negro para el contenedor interno del menú para legibilidad */
         #view-menu .inner-content {
             background: transparent;
+            backdrop-filter: blur(0px);
             width: 100%; height: 100%;
-            display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; /* Centrado flex */
+            display: flex; flex-direction: column; justify-content: center; items-center;
         }
 
         /* Fondo Valentina */
         #view-valentina {
-            background-color: #050505;
-            background-image: radial-gradient(circle at 50% 30%, #1a0b1a 0%, #000000 70%);
+            background-color: #000;
             color: #fff;
         }
 
-        /* --- BOTONES PRINCIPALES (POSICIONAMIENTO ABSOLUTO) --- */
+        /* --- BOTONES NEÓN HOME --- */
         .magic-btn {
-            /* REGLA: Posición absoluta centrada horizontalmente */
             position: absolute;
             left: 50%;
             transform: translate(-50%, -50%);
-            
             width: 70%;
             padding: 15px 0;
             text-align: center;
@@ -173,102 +143,96 @@
             font-weight: 800;
             letter-spacing: 3px;
             color: #fff;
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(5px);
+            background: transparent;
             cursor: pointer;
+            text-decoration: none;
             z-index: 50;
             border: 2px solid var(--gold);
             box-shadow: 0 0 10px var(--gold), inset 0 0 10px rgba(255, 215, 0, 0.3);
             text-shadow: 0 0 5px rgba(0,0,0,0.8);
             transition: all 0.3s ease;
-            font-size: 0.9rem;
         }
 
         .magic-btn:hover {
             box-shadow: 0 0 20px var(--gold), 0 0 30px var(--gold);
-            background: rgba(255, 215, 0, 0.2);
-            transform: translate(-50%, -50%) scale(1.05);
+            background: rgba(255, 215, 0, 0.1);
         }
 
-        /* REGLA: Top en porcentajes */
         #btn-main-1 { top: 72%; } 
         #btn-main-2 { top: 85%; }
 
         /* --- BOTONES MENÚ CELINA --- */
         .menu-btn {
-            background: rgba(255, 255, 255, 0.9);
-            color: #1a1a1a;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
             width: 80%;
-            margin: 6px auto;
-            padding: 14px;
+            margin: 8px auto;
+            padding: 15px;
             text-align: center;
             border-radius: 50px;
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-weight: 600;
+            letter-spacing: 2px;
             transition: 0.3s;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             cursor: pointer;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
             position: relative;
             opacity: 0; 
             transform: translateY(20px); 
-            text-transform: uppercase;
-            font-size: 0.85rem;
         }
         .menu-btn:hover {
             background: #fff;
             color: #000;
             border-color: var(--gold);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-            transform: scale(1.03) !important;
+            box-shadow: 0 0 15px var(--gold);
+            transform: scale(1.05) !important;
         }
 
         /* --- COMPONENTES VALENTINA --- */
         .heart-img {
             width: 150px; height: 150px;
             margin: 0 auto;
-            /* Placeholder para mama.jpeg */
-            background-image: url('https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=500&auto=format&fit=crop'); 
-            /* background-image: url('mama.jpeg'); */
+            background-image: url('mama.jpeg');
             background-size: cover; background-position: center;
-            
-            /* Mascara de corazón CSS puro */
             mask: radial-gradient(at 70% 31%, #000 29%, #0000 30%), radial-gradient(at 30% 31%, #000 29%, #0000 30%), linear-gradient(#000 0 0) bottom/100% 54% no-repeat, linear-gradient(#000 0 0) bottom /37% 0% no-repeat;
             mask-composite: add;
             -webkit-mask: radial-gradient(at 70% 31%, #000 29%, #0000 30%), radial-gradient(at 30% 31%, #000 29%, #0000 30%), linear-gradient(#000 0 0) bottom/100% 54% no-repeat;
             -webkit-mask-composite: source-over;
             clip-path: path("M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z");
-            
-            filter: drop-shadow(0 0 10px var(--fuchsia));
+            box-shadow: 0 0 20px var(--fuchsia);
         }
 
         /* --- UI COMPONENTES --- */
         .back-btn-small {
             position: absolute; top: 20px; left: 20px;
-            background: rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.3);
             width: 40px; height: 40px;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; z-index: 50; color: #fff;
             transition: 0.3s;
-            backdrop-filter: blur(4px);
         }
-        .back-btn-small:hover { background: rgba(255,255,255,0.4); }
+        .back-btn-small:hover { background: rgba(0,0,0,0.6); }
 
+        /* NUEVO BOTON VOLVER ABAJO (SUBPAGINAS CELINA) */
         .back-btn-bottom {
             position: absolute;
-            bottom: 30px; 
+            bottom: 30px; /* Separado del borde inferior */
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             color: #fff;
             padding: 12px 30px;
-            border-radius: 50px; 
+            border-radius: 50px; /* Redondeado estilo píldora */
             border: 1px solid var(--gold);
             cursor: pointer;
             z-index: 60;
-            display: flex; align-items: center; gap: 10px;
-            font-weight: bold; text-transform: uppercase; letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             font-size: 0.8rem;
             box-shadow: 0 4px 20px rgba(0,0,0,0.6);
             transition: 0.3s all;
@@ -284,8 +248,7 @@
         .music-control {
             position: absolute; top: 20px; right: 20px;
             width: 40px; height: 40px;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
+            background: rgba(255, 215, 0, 0.2);
             border: 2px solid var(--gold);
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
@@ -293,88 +256,82 @@
             z-index: 100; cursor: pointer;
             box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
             animation: pulseMusic 2s infinite;
-            transition: all 0.3s;
         }
         @keyframes pulseMusic { 0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); } }
 
-        /* GALERIA */
-        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 20px; padding-bottom: 100px; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 20px; }
         .gallery-item { 
             width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; 
             cursor: pointer; transition: 0.3s; 
-            opacity: 0; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            opacity: 0; /* Para animación inicial */
         }
         
         #lightbox {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 1000;
+            background: rgba(0,0,0,0.95); z-index: 100;
             display: flex; justify-content: center; align-items: center;
             opacity: 0; pointer-events: none;
         }
         #lightbox.active { opacity: 1; pointer-events: auto; }
-        #lightbox img { max-width: 90%; max-height: 80%; border: 2px solid #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); border-radius: 8px; }
+        #lightbox img { max-width: 90%; max-height: 80%; border: 2px solid #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
 
         /* FOOTER ANIMADO */
         .footer { 
-            position: absolute; bottom: 10px; left: 0; width: 100%;
-            text-align: center; 
+            margin-top: auto; padding: 10px; text-align: center; 
             background: transparent; color: rgba(255,255,255,0.5); 
             font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px;
-            z-index: 20; 
+            z-index: 20; position: relative;
         }
         .footer a {
             color: inherit; text-decoration: none; font-weight: bold;
             display: inline-block;
+            animation: footerPulse 2s infinite ease-in-out;
             transition: 0.3s;
         }
         .footer a:hover {
             color: var(--gold);
             text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+            animation: none;
         }
 
-        /* Scrollbar oculta */
+        @keyframes footerPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        
         ::-webkit-scrollbar { width: 0px; background: transparent; }
     </style>
 </head>
 <body>
 
-    <!-- AUDIO DE FONDO (Requiere interacción del usuario para sonar en la mayoría de navegadores) -->
+    <!-- AUDIO DE FONDO -->
     <audio id="bg-music" loop>
         <source src="musica.mp3" type="audio/mp3">
     </audio>
 
-    <!-- Decoración para PC (fondo borroso fuera del móvil) -->
     <div class="pc-decoration"></div>
 
-    <!-- CONTENEDOR PRINCIPAL CON PROPORCIÓN 9:16 O FULLSCREEN -->
     <div class="main-wrapper">
-        
-        <!-- Control de Música -->
+        <!-- Control de Música (Siempre visible en todas las páginas) -->
         <div class="music-control" onclick="toggleMusic()">
             <i class="fas fa-music" id="music-icon"></i>
         </div>
 
-        <!-- Partículas -->
         <div id="particles-container"></div>
 
         <!-- VISTA: HOME -->
-        <div id="view-home" class="page-view">
+        <div id="view-home" class="page-view" style="pointer-events: auto; opacity: 1; visibility: visible;">
             
-            <!-- Logo o Título Principal podría ir aquí arriba si tienes uno -->
-
-            <!-- Botones Home con Top % -->
             <div id="btn-main-1" class="magic-btn" onclick="goToMenu()">
                 INVITACIÓN
             </div>
 
-            <div id="btn-main-2" class="magic-btn" onclick="navigateTo('view-valentina')" 
-                 style="border-color: var(--fuchsia); box-shadow: 0 0 10px var(--fuchsia);">
+            <div id="btn-main-2" class="magic-btn" onclick="navigateTo('view-valentina')" style="border-color: var(--fuchsia); color: #fff; box-shadow: 0 0 10px var(--fuchsia);">
                 CUMPLEAÑOS VALENTINA
             </div>
 
-            <div class="footer">
-                <a href="https://wa.me/59165620007" target="_blank">
+            <div class="footer" style="position: absolute; bottom: 10px; width: 100%;">
+                <a href="https://wa.me/59165620007?text=Buenas%20Estoy%20interesado%20en%20las%20invitaciones%20digitales!" target="_blank">
                     HUNTERDESIGNER
                 </a>
             </div>
@@ -383,23 +340,28 @@
         <!-- VISTA: MENÚ CELINA -->
         <div id="view-menu" class="page-view">
             <div class="inner-content">
-                <div class="text-center mb-6 mt-10">
+                <div class="text-center mb-6">
                     <h1 class="text-5xl font-bold mb-2 text-gray-800 font-[Playfair_Display]">Celina</h1>
-                    <div class="h-[2px] w-20 bg-[#d4af37] mx-auto mb-2"></div>
-                    <p class="text-gray-600 tracking-[0.3em] text-sm font-semibold">MIS 15 AÑOS</p>
+                    <p class="text-gray-500 tracking-widest text-sm">MIS 15 AÑOS</p>
                 </div>
                 
-                <div class="flex flex-col w-full max-w-[85%] gap-2 z-10" id="celina-btn-container">
+                <div class="flex flex-col w-full max-w-xs gap-2 z-10" id="celina-btn-container">
                     <button onclick="navigateTo('view-details')" class="menu-btn">INVITACIÓN</button>
                     <button onclick="navigateTo('view-location')" class="menu-btn">UBICACIÓN</button>
                     <button onclick="navigateTo('view-gallery')" class="menu-btn">GALERÍA</button>
                     <button onclick="navigateTo('view-video')" class="menu-btn">VIDEO</button>
-                    <a href="https://wa.me/59165620007?text=Hola,%20quiero%20confirmar%20mi%20asistencia" target="_blank" class="menu-btn" style="background: #25D366; color: white; border-color: #25D366;">CONFIRMAR ASISTENCIA</a>
+                    <a href="https://wa.me/59165620007?text=Hola,%20quiero%20confirmar%20mi%20asistencia" target="_blank" class="menu-btn" style="background: #25D366; border-color: #25D366;">CONFIRMAR ASISTENCIA</a>
                     
-                    <!-- Botón Volver -->
-                    <button onclick="goBackToHome()" class="menu-btn !bg-gray-800 !text-white mt-4 flex items-center justify-center gap-2 !border-none">
+                    <!-- Botón Volver con Icono -->
+                    <button onclick="goBackToHome()" class="menu-btn bg-gray-300 !text-gray-800 mt-2 flex items-center justify-center gap-2">
                         <i class="fas fa-arrow-left"></i> VOLVER
                     </button>
+                </div>
+
+                <div class="footer w-full">
+                    <a href="https://wa.me/59165620007?text=Buenas%20Estoy%20interesado%20en%20las%20invitaciones%20digitales!" target="_blank">
+                        HUNTERDESIGNER
+                    </a>
                 </div>
             </div>
         </div>
@@ -407,49 +369,43 @@
         <!-- VISTA: VALENTINA -->
         <div id="view-valentina" class="page-view">
             <div class="back-btn-small" onclick="goBackToHome()"><i class="fas fa-arrow-left"></i></div>
-            <div class="flex flex-col items-center justify-center min-h-full p-6 text-center relative z-10">
+            <div class="flex flex-col items-center justify-center h-full p-6 text-center">
                 
                 <div class="heart-img mb-6 animate-pulse"></div>
 
-                <h1 class="text-5xl font-[Playfair_Display] text-[#ff00ff] mb-2 drop-shadow-lg">Valentina</h1>
-                <p class="text-gray-300 uppercase tracking-widest text-xs mb-8">Te invito a mi cumpleaños</p>
+                <h1 class="text-4xl font-[Playfair_Display] text-[#ff00ff] mb-2">Valentina</h1>
+                <p class="text-gray-400 uppercase tracking-widest text-xs mb-8">Te invito a mi cumpleaños</p>
 
-                <div class="bg-gray-900/80 backdrop-blur-sm border border-fuchsia-500/30 p-8 rounded-xl w-full shadow-2xl">
-                    <i class="far fa-calendar-alt text-fuchsia-400 text-2xl mb-2"></i>
+                <div class="bg-gray-900 border border-gray-800 p-6 rounded-lg w-full shadow-2xl">
                     <p class="text-white font-bold text-lg mb-1">FECHA</p>
-                    <p class="text-fuchsia-300 text-sm mb-6">Sábado 24 de Agosto</p>
+                    <p class="text-fuchsia-400 text-sm mb-4">Sábado 24 de Agosto</p>
                     
-                    <div class="w-full h-[1px] bg-gray-700 mb-6"></div>
+                    <div class="w-full h-[1px] bg-gray-800 mb-4"></div>
 
-                    <i class="fas fa-map-marker-alt text-fuchsia-400 text-2xl mb-2"></i>
                     <p class="text-white font-bold text-lg mb-1">LUGAR</p>
-                    <p class="text-gray-300 text-sm mb-6">Salón de Eventos "El Palacio"</p>
+                    <p class="text-gray-400 text-sm mb-4">Salón de Eventos "El Palacio"</p>
                     
-                    <a href="https://maps.app.goo.gl/6vUnDNdtYt7A6uY39" target="_blank" 
-                       class="inline-block text-xs text-[#000] bg-[#40e0d0] px-6 py-2 rounded-full font-bold hover:bg-white transition shadow-[0_0_10px_#40e0d0]">
-                       VER UBICACIÓN
-                    </a>
+                    <a href="https://maps.app.goo.gl/6vUnDNdtYt7A6uY39" target="_blank" class="text-xs text-[#40e0d0] border border-[#40e0d0] px-3 py-1 rounded hover:bg-[#40e0d0] hover:text-black transition">VER UBICACIÓN</a>
                 </div>
 
-                <a href="https://wa.me/59165620007?text=Confirmo%20para%20Valentina" class="mt-8 text-sm text-gray-500 hover:text-white transition flex items-center gap-2">
-                    <i class="fab fa-whatsapp"></i> CONFIRMAR ASISTENCIA
-                </a>
+                <a href="https://wa.me/59165620007?text=Confirmo%20para%20Valentina" class="mt-8 text-sm text-gray-500 hover:text-white transition">CONFIRMAR ASISTENCIA</a>
             </div>
         </div>
 
         <!-- VISTA: DETALLE (Celina) -->
         <div id="view-details" class="page-view">
-            <div class="flex flex-col items-center justify-center min-h-full p-8 text-center bg-[url('https://www.transparenttextures.com/patterns/diamond-upholstery.png')]">
-                <h2 class="text-3xl text-[#d4af37] mb-8 font-[Playfair_Display]">Estás Invitado</h2>
-                <div class="bg-white/95 backdrop-blur p-10 shadow-2xl rounded-lg border-2 border-[#d4af37]">
-                    <p class="text-gray-500 uppercase tracking-widest text-xs mb-4">Celebra con nosotros</p>
-                    <h1 class="text-6xl font-[Playfair_Display] mb-4 text-[#1a1a1a]">Celina</h1>
-                    <div class="w-24 h-1 bg-[#d4af37] mx-auto mb-6"></div>
-                    <p class="text-xl mb-2 font-bold text-[#1a1a1a]">SÁBADO 24 DE AGOSTO</p>
-                    <p class="text-gray-600 italic font-serif">Salón de Eventos "El Palacio"</p>
+            <div class="flex flex-col items-center justify-center h-full p-8 text-center bg-[url('https://www.transparenttextures.com/patterns/diamond-upholstery.png')]">
+                <h2 class="text-3xl text-[#d4af37] mb-6 font-[Playfair_Display]">Estás Invitado</h2>
+                <div class="bg-white p-8 shadow-2xl rounded-lg border border-gray-100">
+                    <p class="text-gray-500 uppercase tracking-widest text-xs mb-2">Celebra con nosotros</p>
+                    <h1 class="text-5xl font-serif mb-4">Celina</h1>
+                    <div class="w-16 h-1 bg-[#d4af37] mx-auto mb-6"></div>
+                    <p class="text-lg mb-2 font-bold">SÁBADO 24 DE AGOSTO</p>
+                    <p class="text-gray-600 italic">Salón de Eventos "El Palacio"</p>
                 </div>
             </div>
             
+            <!-- Botón Volver Abajo Centro -->
             <div class="back-btn-bottom" onclick="navigateTo('view-menu')">
                 <i class="fas fa-undo-alt"></i> VOLVER
             </div>
@@ -458,33 +414,35 @@
         <!-- VISTA: UBICACIÓN (Celina) -->
         <div id="view-location" class="page-view">
             <div class="flex flex-col h-full">
-                <div class="h-[35%] flex flex-col items-center justify-center bg-white p-8 text-center relative z-10 shadow-lg">
-                    <h2 class="text-3xl font-serif mb-4 text-gray-800">Ubicación</h2>
-                    <p class="text-gray-500 text-sm mb-4 max-w-[250px]">Acompáñanos en este día tan especial en el Salón "El Palacio".</p>
-                    <a href="https://maps.app.goo.gl/6vUnDNdtYt7A6uY39" target="_blank" 
-                       class="bg-[#d4af37] text-white px-8 py-3 rounded-full shadow-lg inline-flex items-center gap-2 font-bold hover:bg-[#b5952f] transition">
-                       <i class="fas fa-map-marker-alt"></i> ABRIR MAPA
-                    </a>
+                <div class="h-1/3 flex items-center justify-center bg-gray-100 p-8 text-center">
+                    <div>
+                        <h2 class="text-2xl font-serif mb-2">Ubicación</h2>
+                        <a href="https://maps.app.goo.gl/6vUnDNdtYt7A6uY39" target="_blank" 
+                           class="bg-[#d4af37] text-white px-6 py-3 rounded-full shadow-lg inline-flex items-center gap-2 font-bold">
+                           <i class="fas fa-map-marker-alt"></i> ABRIR MAPA
+                        </a>
+                    </div>
                 </div>
-                <div class="flex-grow w-full bg-gray-200 relative">
+                <div class="flex-grow w-full h-2/3 bg-gray-200">
                      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3825.592534884252!2d-68.1192935!3d-16.508892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTbCsDMwJzMyLjAiUyA2OMKwMDcnMDkuNSJX!5e0!3m2!1ses!2sbo!4v1620000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                     <!-- Sombra interna sobre el mapa -->
-                     <div class="absolute top-0 left-0 w-full h-4 bg-gradient-to-b from-black/10 to-transparent"></div>
                 </div>
             </div>
 
+            <!-- Botón Volver Abajo Centro -->
             <div class="back-btn-bottom" onclick="navigateTo('view-menu')">
                 <i class="fas fa-undo-alt"></i> VOLVER
             </div>
         </div>
 
         <!-- VISTA: GALERÍA -->
-        <div id="view-gallery" class="page-view block bg-gray-50">
-            <div class="sticky top-0 bg-white/90 backdrop-blur-md z-20 p-4 border-b border-gray-200 flex items-center justify-center shadow-sm">
-                <h2 class="text-lg font-bold tracking-widest text-gray-800">GALERÍA</h2>
+        <div id="view-gallery" class="page-view block">
+            <div class="sticky top-0 bg-white/90 backdrop-blur z-20 p-4 border-b flex items-center justify-center">
+                <h2 class="text-lg font-bold">GALERÍA</h2>
             </div>
             <div class="gallery-grid" id="gallery-container"></div>
-            
+            <div class="h-32"></div> <!-- Espaciador para que el botón flotante no tape fotos -->
+
+            <!-- Botón Volver Abajo Centro -->
             <div class="back-btn-bottom" onclick="navigateTo('view-menu')">
                 <i class="fas fa-undo-alt"></i> VOLVER
             </div>
@@ -492,12 +450,13 @@
 
         <!-- VISTA: VIDEO -->
         <div id="view-video" class="page-view bg-black flex flex-col items-center justify-center">
-            <h2 class="text-white z-20 mb-8 font-[Playfair_Display] text-3xl absolute top-[10%]">Mis Recuerdos</h2>
-            <div class="relative w-[90%] aspect-[9/16] max-h-[60%] rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(255,255,255,0.1)] border border-gray-800 bg-gray-900">
-                <iframe src="https://drive.google.com/file/d/1CXyqZH58jqgdm3h6oDsOfFQWXbOHPet9/preview" width="100%" height="100%" style="border:0;" allow="autoplay"></iframe>
+            <h2 class="text-white z-20 mb-4 font-serif text-2xl absolute top-10">Mis Recuerdos</h2>
+            <div class="relative w-[90%] h-[70%] rounded-2xl overflow-hidden shadow-2xl border border-gray-800 bg-black">
+                <iframe src="https://drive.google.com/file/d/1CXyqZH58jqgdm3h6oDsOfFQWXbOHPet9/preview" width="100%" height="100%" allow="autoplay"></iframe>
             </div>
 
-            <div class="back-btn-bottom" onclick="navigateTo('view-menu')" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-color: rgba(255,255,255,0.3);">
+            <!-- Botón Volver Abajo Centro -->
+            <div class="back-btn-bottom" onclick="navigateTo('view-menu')" style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px);">
                 <i class="fas fa-undo-alt"></i> VOLVER
             </div>
         </div>
@@ -514,28 +473,28 @@
             const container = document.getElementById('particles-container');
             const colors = ['#FF00FF', '#40E0D0', '#FFD700'];
 
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 35; i++) {
                 const p = document.createElement('div');
                 p.classList.add('particle');
                 p.style.left = Math.random() * 100 + '%';
                 p.style.top = Math.random() * 100 + '%';
-                p.style.width = (Math.random() * 4 + 3) + 'px';
+                p.style.width = (Math.random() * 5 + 5) + 'px';
                 p.style.height = p.style.width;
                 p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                p.style.animationDuration = (Math.random() * 8 + 5) + 's';
+                p.style.animationDuration = (Math.random() * 5 + 5) + 's';
                 p.style.animationDelay = (Math.random() * 5) + 's';
                 container.appendChild(p);
             }
 
             const icons = ['🎈', '✨', '🎉', '🎁', '🎂'];
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 15; i++) {
                 const icon = document.createElement('div');
                 icon.classList.add('party-icon');
                 icon.innerText = icons[Math.floor(Math.random() * icons.length)];
                 icon.style.left = Math.random() * 100 + '%';
-                icon.style.animationDuration = (Math.random() * 7 + 6) + 's';
+                icon.style.animationDuration = (Math.random() * 6 + 4) + 's';
                 icon.style.animationDelay = (Math.random() * 5) + 's';
-                icon.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                icon.style.fontSize = (Math.random() * 20 + 15) + 'px';
                 container.appendChild(icon);
             }
         }
@@ -552,13 +511,11 @@
                 musicIcon.classList.remove('fa-volume-up');
                 musicIcon.classList.add('fa-music');
                 musicIcon.parentElement.style.animation = "none";
-                musicIcon.parentElement.style.borderColor = "var(--gold)";
             } else {
-                audio.play().catch(e => console.log("Interacción requerida primero"));
+                audio.play();
                 musicIcon.classList.remove('fa-music');
                 musicIcon.classList.add('fa-volume-up');
                 musicIcon.parentElement.style.animation = "pulseMusic 2s infinite";
-                musicIcon.parentElement.style.borderColor = "#fff";
             }
             isPlaying = !isPlaying;
         }
@@ -572,29 +529,33 @@
             const incoming = document.getElementById(targetId);
             if(outgoing === incoming) return;
 
+            // Bloquear clics mientras anima
             document.body.style.pointerEvents = 'none';
 
             // Animación Salida
-            gsap.to(outgoing, { opacity: 0, scale: 0.95, duration: 0.5, ease: "power2.inOut", onComplete: () => {
+            gsap.to(outgoing, { opacity: 0, scale: 0.95, duration: 0.5, onComplete: () => {
                 outgoing.style.visibility = 'hidden';
                 outgoing.style.pointerEvents = 'none';
                 incoming.style.visibility = 'visible';
                 incoming.style.pointerEvents = 'auto';
                 
-                // Animación Entrada
-                gsap.fromTo(incoming, { opacity: 0, scale: 1.05, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: "power2.out", clearProps: "transform", onComplete: () => { document.body.style.pointerEvents = 'auto'; }});
+                // Animación Entrada General
+                gsap.fromTo(incoming, { opacity: 0, scale: 1.05, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.5, clearProps: "transform", onComplete: () => { document.body.style.pointerEvents = 'auto'; }});
 
-                // Trigger Animaciones Internas
+                // EFECTO ESPECÍFICO: Si entramos al Menú Celina
                 if(targetId === 'view-menu') {
                     gsap.fromTo("#celina-btn-container .menu-btn", 
                         { y: 30, opacity: 0 },
-                        { y: 0, opacity: 1, duration: 0.4, stagger: 0.08, ease: "back.out(1.2)" }
+                        { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: "power2.out" }
                     );
                 }
+
+                // EFECTO ESPECÍFICO: Si entramos a la Galería
                 if(targetId === 'view-gallery') {
+                    // Animación de fotos en cascada
                     gsap.fromTo(".gallery-item", 
                         { y: 50, opacity: 0 },
-                        { y: 0, opacity: 1, duration: 0.5, stagger: 0.05, ease: "power2.out" }
+                        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)" }
                     );
                 }
             }});
@@ -609,7 +570,6 @@
             
             document.body.style.pointerEvents = 'none';
 
-            // Si salimos del menú, animamos los botones hacia fuera primero
             if (currentView === 'view-menu') {
                 gsap.to("#celina-btn-container .menu-btn", {
                     opacity: 0,
@@ -623,31 +583,30 @@
             }
 
             function performSlideExit() {
-                gsap.to(outgoing, { x: '100%', opacity: 0, duration: 0.4, ease: "power2.in", onComplete: () => {
+                gsap.to(outgoing, { x: '100%', duration: 0.4, ease: "power2.in", onComplete: () => {
                     outgoing.style.visibility = 'hidden';
-                    
                     incoming.style.visibility = 'visible';
+                    incoming.style.opacity = '1';
                     incoming.style.pointerEvents = 'auto';
                     
-                    // Entrada de home
-                    gsap.fromTo(incoming, {x: '-20%', opacity: 0}, { x: '0%', opacity: 1, duration: 0.4, ease: "power2.out", onComplete: () => {
-                        document.body.style.pointerEvents = 'auto';
-                    }});
+                    gsap.set(outgoing, { x: 0, opacity: 1 });
+                    
+                    document.body.style.pointerEvents = 'auto';
                 }});
             }
             
             currentView = 'view-home';
         }
 
-        // --- GALERÍA (Imágenes de ejemplo desde Unsplash) ---
+        // --- GALERÍA ---
         const galleryContainer = document.getElementById('gallery-container');
         const photoUrls = [
             'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1496337589254-7e19d01cec44?auto=format&fit=crop&w=600&q=80',
             'https://images.unsplash.com/photo-1530103862676-de3c9da59af7?auto=format&fit=crop&w=600&q=80',
             'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80',
             'https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=600&q=80',
-            'https://images.unsplash.com/photo-1514525253440-b393452e8d26?auto=format&fit=crop&w=600&q=80',
-            'https://images.unsplash.com/photo-1496337589254-7e19d01cec44?auto=format&fit=crop&w=600&q=80'
+            'https://images.unsplash.com/photo-1514525253440-b393452e8d26?auto=format&fit=crop&w=600&q=80'
         ];
 
         photoUrls.forEach((url, index) => {
@@ -658,16 +617,14 @@
 
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
-        
         function openLightbox(url) {
             lightboxImg.src = url; lightbox.classList.add('active');
-            gsap.fromTo(lightboxImg, {scale: 0.8, opacity: 0}, {scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.2)"});
+            gsap.fromTo(lightboxImg, {scale: 0.5, opacity: 0}, {scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.7)"});
         }
         function closeLightbox() {
-            gsap.to(lightboxImg, {scale: 0.8, opacity: 0, duration: 0.2, onComplete: () => lightbox.classList.remove('active')});
+            gsap.to(lightboxImg, {scale: 0.5, opacity: 0, duration: 0.2, onComplete: () => lightbox.classList.remove('active')});
         }
         
-        // Bloquear zoom táctil accidental en iOS
         document.addEventListener('touchmove', function (event) { if (event.scale !== 1) event.preventDefault(); }, { passive: false });
     </script>
 </body>
