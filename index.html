@@ -1,93 +1,631 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>P�gina Full Screen 9:16</title>
+    <title>Invitación Doble - Celina & Valentina</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --gold: #ffd700;
+            --fuchsia: #ff00ff;
+            --turquoise: #40e0d0;
+            --dark: #1a1a1a;
+        }
 
         body {
+            background-color: #111;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+
+        /* --- ESTRUCTURA PRINCIPAL --- */
+        .pc-decoration {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            background-image: url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover;
+            filter: blur(8px) brightness(0.4);
+        }
+
+        .main-wrapper {
+            position: relative;
+            z-index: 10;
+            margin: 0 auto;
+            height: 100dvh;
+            width: 100vh;
+            max-width: 56.25vh; /* 9:16 PC */
             background-color: #000;
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100dvh;
+            background-image: url('fondo.jpg'); 
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
             overflow: hidden;
         }
 
-        /* EL TRUCO: El contenedor ocupa TODO el m�vil, pero mantiene la l�gica 9:16 para los botones */
-        .main-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100dvh;
-            max-width: 56.25vh; /* Esto equivale a 9/16 de la altura total */
-            background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop'); /* REEMPLAZAR AQU� */
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 100px rgba(0,0,0,0.5);
-        }
-
-        /* Ajuste para que en celulares se vea realmente Full Screen sin bordes */
         @media (max-aspect-ratio: 9/16) {
             .main-wrapper {
-                max-width: 100vw;
+                width: 100vw;
+                max-width: none;
+                border: none;
             }
         }
 
-        .boton-menu {
+        /* --- PARTICULAS & DECORACIÓN --- */
+        #particles-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 2; overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: floatParticle 10s infinite linear;
+        }
+
+        .party-icon {
+            position: absolute;
+            font-size: 24px;
+            top: -50px;
+            animation: dropAndFloat 8s infinite ease-in-out;
+            opacity: 0.9;
+            z-index: 5;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        @keyframes dropAndFloat {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            50% { transform: translateY(30vh) rotate(180deg); }
+            100% { transform: translateY(20vh) translateX(20px) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- SISTEMA DE PÁGINAS --- */
+        .page-view {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column;
+            overflow-y: auto;
+            background: rgba(255,255,255,0.95);
+            opacity: 0; visibility: hidden; pointer-events: none;
+        }
+
+        #view-home {
+            background: transparent;
+            overflow: hidden; pointer-events: auto; opacity: 1; visibility: visible;
+        }
+
+        /* Fondo específico para Menú Celina */
+        #view-menu {
+            background: url('fondocelina2.jpg') center/cover;
+        }
+        /* Fondo negro para el contenedor interno del menú para legibilidad */
+        #view-menu .inner-content {
+            background: transparent;
+            backdrop-filter: blur(0px);
+            width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; items-center;
+        }
+
+        /* Fondo Valentina */
+        #view-valentina {
+            background-color: #000;
+            color: #fff;
+        }
+
+        /* --- BOTONES NEÓN HOME --- */
+        .magic-btn {
             position: absolute;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 75%;
-            padding: 18px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.4);
-            color: white;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: bold;
+            width: 70%;
+            padding: 15px 0;
+            text-align: center;
             text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: #fff;
+            background: transparent;
             cursor: pointer;
+            text-decoration: none;
+            z-index: 50;
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 10px var(--gold), inset 0 0 10px rgba(255, 215, 0, 0.3);
+            text-shadow: 0 0 5px rgba(0,0,0,0.8);
+            transition: all 0.3s ease;
+        }
+
+        .magic-btn:hover {
+            box-shadow: 0 0 20px var(--gold), 0 0 30px var(--gold);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        #btn-main-1 { top: 72%; } 
+        #btn-main-2 { top: 85%; }
+
+        /* --- BOTONES MENÚ CELINA --- */
+        .menu-btn {
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            width: 80%;
+            margin: 8px auto;
+            padding: 15px;
+            text-align: center;
+            border-radius: 50px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            opacity: 0; 
+            transform: translateY(20px); 
+        }
+        .menu-btn:hover {
+            background: #fff;
+            color: #000;
+            border-color: var(--gold);
+            box-shadow: 0 0 15px var(--gold);
+            transform: scale(1.05) !important;
+        }
+
+        /* --- COMPONENTES VALENTINA --- */
+        .heart-img {
+            width: 150px; height: 150px;
+            margin: 0 auto;
+            background-image: url('mama.jpeg');
+            background-size: cover; background-position: center;
+            mask: radial-gradient(at 70% 31%, #000 29%, #0000 30%), radial-gradient(at 30% 31%, #000 29%, #0000 30%), linear-gradient(#000 0 0) bottom/100% 54% no-repeat, linear-gradient(#000 0 0) bottom /37% 0% no-repeat;
+            mask-composite: add;
+            -webkit-mask: radial-gradient(at 70% 31%, #000 29%, #0000 30%), radial-gradient(at 30% 31%, #000 29%, #0000 30%), linear-gradient(#000 0 0) bottom/100% 54% no-repeat;
+            -webkit-mask-composite: source-over;
+            clip-path: path("M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z");
+            box-shadow: 0 0 20px var(--fuchsia);
+        }
+
+        /* --- UI COMPONENTES --- */
+        .back-btn-small {
+            position: absolute; top: 20px; left: 20px;
+            background: rgba(0,0,0,0.3);
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; z-index: 50; color: #fff;
             transition: 0.3s;
         }
+        .back-btn-small:hover { background: rgba(0,0,0,0.6); }
 
-        /* Ubicaciones exactas en la imagen */
-        .btn-1 { top: 40%; }
-        .btn-2 { top: 52%; }
-        .btn-3 { top: 64%; }
-
-        /* Contenido lateral solo para PC */
-        .lateral {
-            display: none;
+        /* NUEVO BOTON VOLVER ABAJO (SUBPAGINAS CELINA) */
+        .back-btn-bottom {
             position: absolute;
-            color: #444;
+            bottom: 30px; /* Separado del borde inferior */
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.9);
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 50px; /* Redondeado estilo píldora */
+            border: 1px solid var(--gold);
+            cursor: pointer;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             font-size: 0.8rem;
-            width: 200px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            transition: 0.3s all;
+        }
+        .back-btn-bottom:hover {
+            background: var(--gold);
+            color: #000;
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
         }
 
-        @media (min-width: 1024px) {
-            .lateral { display: block; }
-            .lat-izq { left: 5%; text-align: right; }
-            .lat-der { right: 5%; text-align: left; }
+        /* BOTON MUSICA */
+        .music-control {
+            position: absolute; top: 20px; right: 20px;
+            width: 40px; height: 40px;
+            background: rgba(255, 215, 0, 0.2);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--gold);
+            z-index: 100; cursor: pointer;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            animation: pulseMusic 2s infinite;
         }
+        @keyframes pulseMusic { 0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); } }
+
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 20px; }
+        .gallery-item { 
+            width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; 
+            cursor: pointer; transition: 0.3s; 
+            opacity: 0; /* Para animación inicial */
+        }
+        
+        #lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 100;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none;
+        }
+        #lightbox.active { opacity: 1; pointer-events: auto; }
+        #lightbox img { max-width: 90%; max-height: 80%; border: 2px solid #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+
+        /* FOOTER ANIMADO */
+        .footer { 
+            margin-top: auto; padding: 10px; text-align: center; 
+            background: transparent; color: rgba(255,255,255,0.5); 
+            font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px;
+            z-index: 20; position: relative;
+        }
+        .footer a {
+            color: inherit; text-decoration: none; font-weight: bold;
+            display: inline-block;
+            animation: footerPulse 2s infinite ease-in-out;
+            transition: 0.3s;
+        }
+        .footer a:hover {
+            color: var(--gold);
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+            animation: none;
+        }
+
+        @keyframes footerPulse {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
     </style>
 </head>
 <body>
 
-    <div class="lateral lat-izq">Experiencia Vertical v1.0<br>Dise�o Optimizado</div>
+    <!-- AUDIO DE FONDO -->
+    <audio id="bg-music" loop>
+        <source src="musica.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="pc-decoration"></div>
 
     <div class="main-wrapper">
-        <button class="boton-menu btn-1">Comenzar</button>
-        <button class="boton-menu btn-2">Galer�a Pro</button>
-        <button class="boton-menu btn-3">Contacto</button>
+        <!-- Control de Música (Siempre visible en todas las páginas) -->
+        <div class="music-control" onclick="toggleMusic()">
+            <i class="fas fa-music" id="music-icon"></i>
+        </div>
+
+        <div id="particles-container"></div>
+
+        <!-- VISTA: HOME -->
+        <div id="view-home" class="page-view" style="pointer-events: auto; opacity: 1; visibility: visible;">
+            
+            <div id="btn-main-1" class="magic-btn" onclick="goToMenu()">
+                INVITACIÓN
+            </div>
+
+            <div id="btn-main-2" class="magic-btn" onclick="navigateTo('view-valentina')" style="border-color: var(--fuchsia); color: #fff; box-shadow: 0 0 10px var(--fuchsia);">
+                CUMPLEAÑOS VALENTINA
+            </div>
+
+            <div class="footer" style="position: absolute; bottom: 10px; width: 100%;">
+                <a href="https://wa.me/59165620007?text=Buenas%20Estoy%20interesado%20en%20las%20invitaciones%20digitales!" target="_blank">
+                    HUNTERDESIGNER
+                </a>
+            </div>
+        </div>
+
+        <!-- VISTA: MENÚ CELINA -->
+        <div id="view-menu" class="page-view">
+            <div class="inner-content">
+                <div class="text-center mb-6">
+                    <h1 class="text-5xl font-bold mb-2 text-gray-800 font-[Playfair_Display]">Celina</h1>
+                    <p class="text-gray-500 tracking-widest text-sm">MIS 15 AÑOS</p>
+                </div>
+                
+                <div class="flex flex-col w-full max-w-xs gap-2 z-10" id="celina-btn-container">
+                    <button onclick="navigateTo('view-details')" class="menu-btn">INVITACIÓN</button>
+                    <button onclick="navigateTo('view-location')" class="menu-btn">UBICACIÓN</button>
+                    <button onclick="navigateTo('view-gallery')" class="menu-btn">GALERÍA</button>
+                    <button onclick="navigateTo('view-video')" class="menu-btn">VIDEO</button>
+                    <a href="https://wa.me/59165620007?text=Hola,%20quiero%20confirmar%20mi%20asistencia" target="_blank" class="menu-btn" style="background: #25D366; border-color: #25D366;">CONFIRMAR ASISTENCIA</a>
+                    
+                    <!-- Botón Volver con Icono -->
+                    <button onclick="goBackToHome()" class="menu-btn bg-gray-300 !text-gray-800 mt-2 flex items-center justify-center gap-2">
+                        <i class="fas fa-arrow-left"></i> VOLVER
+                    </button>
+                </div>
+
+                <div class="footer w-full">
+                    <a href="https://wa.me/59165620007?text=Buenas%20Estoy%20interesado%20en%20las%20invitaciones%20digitales!" target="_blank">
+                        HUNTERDESIGNER
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- VISTA: VALENTINA -->
+        <div id="view-valentina" class="page-view">
+            <div class="back-btn-small" onclick="goBackToHome()"><i class="fas fa-arrow-left"></i></div>
+            <div class="flex flex-col items-center justify-center h-full p-6 text-center">
+                
+                <div class="heart-img mb-6 animate-pulse"></div>
+
+                <h1 class="text-4xl font-[Playfair_Display] text-[#ff00ff] mb-2">Valentina</h1>
+                <p class="text-gray-400 uppercase tracking-widest text-xs mb-8">Te invito a mi cumpleaños</p>
+
+                <div class="bg-gray-900 border border-gray-800 p-6 rounded-lg w-full shadow-2xl">
+                    <p class="text-white font-bold text-lg mb-1">FECHA</p>
+                    <p class="text-fuchsia-400 text-sm mb-4">Sábado 24 de Agosto</p>
+                    
+                    <div class="w-full h-[1px] bg-gray-800 mb-4"></div>
+
+                    <p class="text-white font-bold text-lg mb-1">LUGAR</p>
+                    <p class="text-gray-400 text-sm mb-4">Salón de Eventos "El Palacio"</p>
+                    
+                    <a href="https://maps.app.goo.gl/6vUnDNdtYt7A6uY39" target="_blank" class="text-xs text-[#40e0d0] border border-[#40e0d0] px-3 py-1 rounded hover:bg-[#40e0d0] hover:text-black transition">VER UBICACIÓN</a>
+                </div>
+
+                <a href="https://wa.me/59165620007?text=Confirmo%20para%20Valentina" class="mt-8 text-sm text-gray-500 hover:text-white transition">CONFIRMAR ASISTENCIA</a>
+            </div>
+        </div>
+
+        <!-- VISTA: DETALLE (Celina) -->
+        <div id="view-details" class="page-view">
+            <div class="flex flex-col items-center justify-center h-full p-8 text-center bg-[url('https://www.transparenttextures.com/patterns/diamond-upholstery.png')]">
+                <h2 class="text-3xl text-[#d4af37] mb-6 font-[Playfair_Display]">Estás Invitado</h2>
+                <div class="bg-white p-8 shadow-2xl rounded-lg border border-gray-100">
+                    <p class="text-gray-500 uppercase tracking-widest text-xs mb-2">Celebra con nosotros</p>
+                    <h1 class="text-5xl font-serif mb-4">Celina</h1>
+                    <div class="w-16 h-1 bg-[#d4af37] mx-auto mb-6"></div>
+                    <p class="text-lg mb-2 font-bold">SÁBADO 24 DE AGOSTO</p>
+                    <p class="text-gray-600 italic">Salón de Eventos "El Palacio"</p>
+                </div>
+            </div>
+            
+            <!-- Botón Volver Abajo Centro -->
+            <div class="back-btn-bottom" onclick="navigateTo('view-menu')">
+                <i class="fas fa-undo-alt"></i> VOLVER
+            </div>
+        </div>
+
+        <!-- VISTA: UBICACIÓN (Celina) -->
+        <div id="view-location" class="page-view">
+            <div class="flex flex-col h-full">
+                <div class="h-1/3 flex items-center justify-center bg-gray-100 p-8 text-center">
+                    <div>
+                        <h2 class="text-2xl font-serif mb-2">Ubicación</h2>
+                        <a href="https://maps.app.goo.gl/6vUnDNdtYt7A6uY39" target="_blank" 
+                           class="bg-[#d4af37] text-white px-6 py-3 rounded-full shadow-lg inline-flex items-center gap-2 font-bold">
+                           <i class="fas fa-map-marker-alt"></i> ABRIR MAPA
+                        </a>
+                    </div>
+                </div>
+                <div class="flex-grow w-full h-2/3 bg-gray-200">
+                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3825.592534884252!2d-68.1192935!3d-16.508892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTbCsDMwJzMyLjAiUyA2OMKwMDcnMDkuNSJX!5e0!3m2!1ses!2sbo!4v1620000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+
+            <!-- Botón Volver Abajo Centro -->
+            <div class="back-btn-bottom" onclick="navigateTo('view-menu')">
+                <i class="fas fa-undo-alt"></i> VOLVER
+            </div>
+        </div>
+
+        <!-- VISTA: GALERÍA -->
+        <div id="view-gallery" class="page-view block">
+            <div class="sticky top-0 bg-white/90 backdrop-blur z-20 p-4 border-b flex items-center justify-center">
+                <h2 class="text-lg font-bold">GALERÍA</h2>
+            </div>
+            <div class="gallery-grid" id="gallery-container"></div>
+            <div class="h-32"></div> <!-- Espaciador para que el botón flotante no tape fotos -->
+
+            <!-- Botón Volver Abajo Centro -->
+            <div class="back-btn-bottom" onclick="navigateTo('view-menu')">
+                <i class="fas fa-undo-alt"></i> VOLVER
+            </div>
+        </div>
+
+        <!-- VISTA: VIDEO -->
+        <div id="view-video" class="page-view bg-black flex flex-col items-center justify-center">
+            <h2 class="text-white z-20 mb-4 font-serif text-2xl absolute top-10">Mis Recuerdos</h2>
+            <div class="relative w-[90%] h-[70%] rounded-2xl overflow-hidden shadow-2xl border border-gray-800 bg-black">
+                <iframe src="https://drive.google.com/file/d/1CXyqZH58jqgdm3h6oDsOfFQWXbOHPet9/preview" width="100%" height="100%" allow="autoplay"></iframe>
+            </div>
+
+            <!-- Botón Volver Abajo Centro -->
+            <div class="back-btn-bottom" onclick="navigateTo('view-menu')" style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px);">
+                <i class="fas fa-undo-alt"></i> VOLVER
+            </div>
+        </div>
+
+        <div id="lightbox" onclick="closeLightbox()">
+            <img id="lightbox-img" src="" alt="Zoom">
+        </div>
+
     </div>
 
-    <div class="lateral lat-der">Desliza para explorar<br>� 2024 Tu Marca</div>
+    <script>
+        // --- EFECTOS DE FONDO ---
+        function createEffects() {
+            const container = document.getElementById('particles-container');
+            const colors = ['#FF00FF', '#40E0D0', '#FFD700'];
 
+            for (let i = 0; i < 35; i++) {
+                const p = document.createElement('div');
+                p.classList.add('particle');
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                p.style.width = (Math.random() * 5 + 5) + 'px';
+                p.style.height = p.style.width;
+                p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                p.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                p.style.animationDelay = (Math.random() * 5) + 's';
+                container.appendChild(p);
+            }
+
+            const icons = ['🎈', '✨', '🎉', '🎁', '🎂'];
+            for (let i = 0; i < 15; i++) {
+                const icon = document.createElement('div');
+                icon.classList.add('party-icon');
+                icon.innerText = icons[Math.floor(Math.random() * icons.length)];
+                icon.style.left = Math.random() * 100 + '%';
+                icon.style.animationDuration = (Math.random() * 6 + 4) + 's';
+                icon.style.animationDelay = (Math.random() * 5) + 's';
+                icon.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                container.appendChild(icon);
+            }
+        }
+        createEffects();
+
+        // --- CONTROL DE MÚSICA ---
+        const audio = document.getElementById('bg-music');
+        const musicIcon = document.getElementById('music-icon');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                musicIcon.classList.remove('fa-volume-up');
+                musicIcon.classList.add('fa-music');
+                musicIcon.parentElement.style.animation = "none";
+            } else {
+                audio.play();
+                musicIcon.classList.remove('fa-music');
+                musicIcon.classList.add('fa-volume-up');
+                musicIcon.parentElement.style.animation = "pulseMusic 2s infinite";
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // --- NAVEGACIÓN ---
+        let currentView = 'view-home';
+        gsap.config({ nullTargetWarn: false });
+
+        function navigateTo(targetId) {
+            const outgoing = document.getElementById(currentView);
+            const incoming = document.getElementById(targetId);
+            if(outgoing === incoming) return;
+
+            // Bloquear clics mientras anima
+            document.body.style.pointerEvents = 'none';
+
+            // Animación Salida
+            gsap.to(outgoing, { opacity: 0, scale: 0.95, duration: 0.5, onComplete: () => {
+                outgoing.style.visibility = 'hidden';
+                outgoing.style.pointerEvents = 'none';
+                incoming.style.visibility = 'visible';
+                incoming.style.pointerEvents = 'auto';
+                
+                // Animación Entrada General
+                gsap.fromTo(incoming, { opacity: 0, scale: 1.05, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.5, clearProps: "transform", onComplete: () => { document.body.style.pointerEvents = 'auto'; }});
+
+                // EFECTO ESPECÍFICO: Si entramos al Menú Celina
+                if(targetId === 'view-menu') {
+                    gsap.fromTo("#celina-btn-container .menu-btn", 
+                        { y: 30, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: "power2.out" }
+                    );
+                }
+
+                // EFECTO ESPECÍFICO: Si entramos a la Galería
+                if(targetId === 'view-gallery') {
+                    // Animación de fotos en cascada
+                    gsap.fromTo(".gallery-item", 
+                        { y: 50, opacity: 0 },
+                        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)" }
+                    );
+                }
+            }});
+            currentView = targetId;
+        }
+
+        function goToMenu() { navigateTo('view-menu'); }
+        
+        function goBackToHome() {
+            const outgoing = document.getElementById(currentView);
+            const incoming = document.getElementById('view-home');
+            
+            document.body.style.pointerEvents = 'none';
+
+            if (currentView === 'view-menu') {
+                gsap.to("#celina-btn-container .menu-btn", {
+                    opacity: 0,
+                    y: 20,
+                    duration: 0.2, 
+                    stagger: 0.05,
+                    onComplete: performSlideExit
+                });
+            } else {
+                performSlideExit();
+            }
+
+            function performSlideExit() {
+                gsap.to(outgoing, { x: '100%', duration: 0.4, ease: "power2.in", onComplete: () => {
+                    outgoing.style.visibility = 'hidden';
+                    incoming.style.visibility = 'visible';
+                    incoming.style.opacity = '1';
+                    incoming.style.pointerEvents = 'auto';
+                    
+                    gsap.set(outgoing, { x: 0, opacity: 1 });
+                    
+                    document.body.style.pointerEvents = 'auto';
+                }});
+            }
+            
+            currentView = 'view-home';
+        }
+
+        // --- GALERÍA ---
+        const galleryContainer = document.getElementById('gallery-container');
+        const photoUrls = [
+            'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1496337589254-7e19d01cec44?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1530103862676-de3c9da59af7?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=600&q=80',
+            'https://images.unsplash.com/photo-1514525253440-b393452e8d26?auto=format&fit=crop&w=600&q=80'
+        ];
+
+        photoUrls.forEach((url, index) => {
+            const img = document.createElement('img');
+            img.src = url; img.className = 'gallery-item'; img.onclick = () => openLightbox(url);
+            galleryContainer.appendChild(img);
+        });
+
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        function openLightbox(url) {
+            lightboxImg.src = url; lightbox.classList.add('active');
+            gsap.fromTo(lightboxImg, {scale: 0.5, opacity: 0}, {scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.7)"});
+        }
+        function closeLightbox() {
+            gsap.to(lightboxImg, {scale: 0.5, opacity: 0, duration: 0.2, onComplete: () => lightbox.classList.remove('active')});
+        }
+        
+        document.addEventListener('touchmove', function (event) { if (event.scale !== 1) event.preventDefault(); }, { passive: false });
+    </script>
 </body>
 </html>
