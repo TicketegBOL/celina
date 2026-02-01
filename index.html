@@ -22,42 +22,50 @@
         }
 
         body {
-            background-color: #111;
+            background-color: #050505;
             margin: 0;
             padding: 0;
             overflow: hidden;
             font-family: 'Montserrat', sans-serif;
             color: #333;
+            /* Centrado en PC */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
 
-        /* --- ESTRUCTURA PRINCIPAL --- */
+        /* --- ESTRUCTURA PRINCIPAL (MOBILE 9:16) --- */
         .pc-decoration {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: 0;
-            background-image: url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1920&auto=format&fit=crop');
+            background-image: url('https://raw.githubusercontent.com/TicketegBOL/celina/main/fondo.jpg');
             background-size: cover;
-            filter: blur(8px) brightness(0.4);
+            filter: blur(15px) brightness(0.3);
         }
 
         .main-wrapper {
             position: relative;
             z-index: 10;
-            margin: 0 auto;
-            height: 100dvh;
-            width: 100vh;
-            max-width: 56.25vh; /* 9:16 PC */
+            width: 100%;
+            height: 100dvh; /* Altura dinámica del viewport */
+            /* Restricción de aspecto 9:16 para PC */
+            max-width: 56.25vh; 
             background-color: #000;
-            background-image: url('fondo.jpg'); 
+            /* Imagen de fondo solicitada */
+            background-image: url('https://raw.githubusercontent.com/TicketegBOL/celina/main/fondo.jpg'); 
             background-size: cover;
-            background-position: center;
+            background-position: center center; /* Centrado para que no se corte mal */
             box-shadow: 0 0 50px rgba(0,0,0,0.8);
             overflow: hidden;
         }
 
+        /* Ajuste para móviles nativos */
         @media (max-aspect-ratio: 9/16) {
             .main-wrapper {
                 width: 100vw;
                 max-width: none;
+                height: 100dvh;
                 border: none;
             }
         }
@@ -115,9 +123,12 @@
 
         /* Fondo específico para Menú Celina */
         #view-menu {
-            background: url('fondocelina2.jpg') center/cover;
+            /* Fondo visible para Celina */
+            background: linear-gradient(rgba(255,255,255,0.0), rgba(255,255,255,0.0)), 
+                        url('fondocelina2.jpg');
+            background-size: cover;
+            background-position: center;
         }
-        /* Fondo negro para el contenedor interno del menú para legibilidad */
         #view-menu .inner-content {
             background: transparent;
             backdrop-filter: blur(0px);
@@ -131,49 +142,92 @@
             color: #fff;
         }
 
-        /* --- BOTONES NEÓN HOME --- */
-        .magic-btn {
+        /* --- NUEVOS BOTONES NEÓN INTERMITENTE (HOME) --- */
+        /* Ajustados para escalar con la altura (vh) y mantenerse fijos en posición */
+        @keyframes neonPulseGold {
+            0%, 100% { box-shadow: 0 0 0.5vh var(--gold), inset 0 0 0.5vh var(--gold); border-color: rgba(255, 215, 0, 0.6); }
+            50% { box-shadow: 0 0 2vh var(--gold), inset 0 0 1vh var(--gold); border-color: var(--gold); }
+        }
+
+        @keyframes neonPulseFuchsia {
+            0%, 100% { box-shadow: 0 0 0.5vh var(--fuchsia), inset 0 0 0.5vh var(--fuchsia); border-color: rgba(255, 0, 255, 0.6); }
+            50% { box-shadow: 0 0 2vh var(--fuchsia), inset 0 0 1vh var(--fuchsia); border-color: var(--fuchsia); }
+        }
+
+        .neon-btn {
             position: absolute;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 70%;
-            padding: 15px 0;
+            /* La posición left/top ahora se define individualmente en cada ID */
+            
+            /* Ancho y medidas relativas a la altura para mantener proporción */
+            width: 50%; 
+            padding: 1.2vh 0; 
+            
             text-align: center;
             text-transform: uppercase;
             font-weight: 800;
-            letter-spacing: 3px;
+            letter-spacing: 0.2vh;
+            font-size: 1.8vh; /* Tamaño de fuente relativo a la altura */
+            
             color: #fff;
-            background: transparent;
+            
+            /* Transparencia y Bordes */
+            background: rgba(0, 0, 0, 0.1); /* Casi invisible */
+            backdrop-filter: blur(1px);
+            border: 0.2vh solid;
+            border-radius: 5vh;
+            
             cursor: pointer;
             text-decoration: none;
             z-index: 50;
-            border: 2px solid var(--gold);
-            box-shadow: 0 0 10px var(--gold), inset 0 0 10px rgba(255, 215, 0, 0.3);
             text-shadow: 0 0 5px rgba(0,0,0,0.8);
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
-        .magic-btn:hover {
-            box-shadow: 0 0 20px var(--gold), 0 0 30px var(--gold);
-            background: rgba(255, 215, 0, 0.1);
+        .neon-btn:active {
+            transform: translate(-50%, -50%) scale(0.95);
         }
 
-        #btn-main-1 { top: 72%; } 
-        #btn-main-2 { top: 85%; }
+        /* POSICIONES AJUSTADAS A LA IMAGEN (EDITAR AQUI) */
+        #btn-celina {
+            /* === COORDENADAS X / Y (AJUSTA AQUÍ) === */
+            left: 50%; /* X: 0% izquierda, 100% derecha */
+            top: 74%;  /* Y: 0% arriba, 100% abajo */
+            transform: translate(-50%, -50%); /* Mantiene el botón centrado en el punto */
+            /* ======================================= */
 
-        /* --- BOTONES MENÚ CELINA --- */
+            animation: neonPulseGold 2.5s infinite ease-in-out;
+            color: #fff;
+        }
+
+        #btn-valentina {
+            /* === COORDENADAS X / Y (AJUSTA AQUÍ) === */
+            left: 50%;
+            top: 83.5%;
+            transform: translate(-50%, -50%);
+
+            width: 48%;           /* controla el ancho */
+            padding: 6.5% 0;        /* 🔥 controla la altura con % */
+
+            font-size: 1.6vh;
+            animation: neonPulseFuchsia 2.5s infinite ease-in-out;
+            animation-delay: 1.25s;
+            color: #fff;
+        }
+
+        /* --- BOTONES MENÚ INTERNO CELINA --- */
         .menu-btn {
             background: rgba(0, 0, 0, 0.8);
             color: #fff;
             width: 80%;
-            margin: 8px auto;
-            padding: 15px;
+            margin: 1vh auto;
+            padding: 1.5vh;
             text-align: center;
-            border-radius: 50px;
+            border-radius: 5vh;
             font-weight: 600;
             letter-spacing: 2px;
+            font-size: 1.5vh;
             transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 0.5vh 2vh rgba(0,0,0,0.2);
             cursor: pointer;
             border: 1px solid rgba(255,255,255,0.1);
             position: relative;
@@ -184,22 +238,45 @@
             background: #fff;
             color: #000;
             border-color: var(--gold);
-            box-shadow: 0 0 15px var(--gold);
+            box-shadow: 0 0 2vh var(--gold);
             transform: scale(1.05) !important;
         }
 
-        /* --- COMPONENTES VALENTINA --- */
+        /* --- COMPONENTES VALENTINA (CORAZÓN MEJORADO) --- */
+        .heart-container {
+            width: 18vh; height: 18vh;
+            margin: 0 auto 2vh auto;
+            position: relative;
+            filter: drop-shadow(0 0 1.5vh var(--fuchsia));
+            animation: pulseHeart 3s infinite ease-in-out;
+        }
+        
         .heart-img {
-            width: 150px; height: 150px;
-            margin: 0 auto;
-            background-image: url('mama.jpeg');
-            background-size: cover; background-position: center;
-            mask: radial-gradient(at 70% 31%, #000 29%, #0000 30%), radial-gradient(at 30% 31%, #000 29%, #0000 30%), linear-gradient(#000 0 0) bottom/100% 54% no-repeat, linear-gradient(#000 0 0) bottom /37% 0% no-repeat;
-            mask-composite: add;
-            -webkit-mask: radial-gradient(at 70% 31%, #000 29%, #0000 30%), radial-gradient(at 30% 31%, #000 29%, #0000 30%), linear-gradient(#000 0 0) bottom/100% 54% no-repeat;
-            -webkit-mask-composite: source-over;
+            width: 100%; height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80'); /* Foto ejemplo */
+            background-size: cover; 
+            background-position: center;
+            /* Clip path forma de corazón standard */
             clip-path: path("M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z");
-            box-shadow: 0 0 20px var(--fuchsia);
+            /* Transformación para ajustar el path al contenedor si es necesario, 
+               pero path usa coordenadas SVG 0-24. Mejor usar polygon o imagen SVG mask para responsive 100%. 
+               Usaremos mask-image para mayor compatibilidad responsive */
+            clip-path: none;
+            -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>");
+            mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>");
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            background-color: #fff; /* Fallback */
+        }
+
+        @keyframes pulseHeart {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
         /* --- UI COMPONENTES --- */
@@ -214,16 +291,15 @@
         }
         .back-btn-small:hover { background: rgba(0,0,0,0.6); }
 
-        /* NUEVO BOTON VOLVER ABAJO (SUBPAGINAS CELINA) */
         .back-btn-bottom {
             position: absolute;
-            bottom: 30px; /* Separado del borde inferior */
+            bottom: 4vh; 
             left: 50%;
             transform: translateX(-50%);
             background: rgba(0,0,0,0.9);
             color: #fff;
-            padding: 12px 30px;
-            border-radius: 50px; /* Redondeado estilo píldora */
+            padding: 1.5vh 4vh;
+            border-radius: 50px;
             border: 1px solid var(--gold);
             cursor: pointer;
             z-index: 60;
@@ -233,7 +309,7 @@
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
-            font-size: 0.8rem;
+            font-size: 1.2vh;
             box-shadow: 0 4px 20px rgba(0,0,0,0.6);
             transition: 0.3s all;
         }
@@ -263,7 +339,7 @@
         .gallery-item { 
             width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; 
             cursor: pointer; transition: 0.3s; 
-            opacity: 0; /* Para animación inicial */
+            opacity: 0; 
         }
         
         #lightbox {
@@ -279,7 +355,7 @@
         .footer { 
             margin-top: auto; padding: 10px; text-align: center; 
             background: transparent; color: rgba(255,255,255,0.5); 
-            font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px;
+            font-size: 1vh; text-transform: uppercase; letter-spacing: 2px;
             z-index: 20; position: relative;
         }
         .footer a {
@@ -322,15 +398,17 @@
         <!-- VISTA: HOME -->
         <div id="view-home" class="page-view" style="pointer-events: auto; opacity: 1; visibility: visible;">
             
-            <div id="btn-main-1" class="magic-btn" onclick="goToMenu()">
+            <!-- Botón 1: Celina (Invitación) - Ajustado al Trapecio -->
+            <div id="btn-celina" class="neon-btn" onclick="goToMenu()">
                 INVITACIÓN
             </div>
 
-            <div id="btn-main-2" class="magic-btn" onclick="navigateTo('view-valentina')" style="border-color: var(--fuchsia); color: #fff; box-shadow: 0 0 10px var(--fuchsia);">
-                CUMPLEAÑOS VALENTINA
+            <!-- Botón 2: Valentina (Cumpleaños) - Ajustado al nombre -->
+            <div id="btn-valentina" class="neon-btn" onclick="navigateTo('view-valentina')">
+                
             </div>
 
-            <div class="footer" style="position: absolute; bottom: 10px; width: 100%;">
+            <div class="footer" style="position: absolute; bottom: 1vh; width: 100%;">
                 <a href="https://wa.me/59165620007?text=Buenas%20Estoy%20interesado%20en%20las%20invitaciones%20digitales!" target="_blank">
                     HUNTERDESIGNER
                 </a>
@@ -371,7 +449,10 @@
             <div class="back-btn-small" onclick="goBackToHome()"><i class="fas fa-arrow-left"></i></div>
             <div class="flex flex-col items-center justify-center h-full p-6 text-center">
                 
-                <div class="heart-img mb-6 animate-pulse"></div>
+                <!-- Foto en forma de corazón -->
+                <div class="heart-container">
+                    <div class="heart-img"></div>
+                </div>
 
                 <h1 class="text-4xl font-[Playfair_Display] text-[#ff00ff] mb-2">Valentina</h1>
                 <p class="text-gray-400 uppercase tracking-widest text-xs mb-8">Te invito a mi cumpleaños</p>
