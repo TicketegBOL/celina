@@ -60,7 +60,27 @@
             overflow: hidden;
         }
 
-        /* Ajuste para móviles nativos */
+        /* --- FIX PARA MÓVILES (Elimina barra negra superior) --- */
+        @media (max-width: 768px) {
+            body {
+                display: block !important; /* Desactiva flex para evitar huecos verticales */
+            }
+            .pc-decoration {
+                display: none; /* Mejora rendimiento y evita parpadeos de fondo */
+            }
+            .main-wrapper {
+                position: absolute; /* Fuerza posición al tope */
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100dvh;
+                max-width: none;
+                border: none;
+                box-shadow: none;
+            }
+        }
+
+        /* Ajuste adicional para aspecto estricto */
         @media (max-aspect-ratio: 9/16) {
             .main-wrapper {
                 width: 100vw;
