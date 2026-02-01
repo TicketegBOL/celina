@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Invitación Doble - Celina & Valentina</title>
+    <title>Invitación Celina & Valentina</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- GSAP for Animations -->
@@ -11,7 +11,7 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
 
     <style>
         :root {
@@ -39,7 +39,7 @@
         .pc-decoration {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: 0;
-            background-image: url('https://raw.githubusercontent.com/TicketegBOL/celina/main/fondo.jpg');
+            background-image: url('fondo.jpg');
             background-size: cover;
             filter: blur(15px) brightness(0.3);
         }
@@ -52,42 +52,26 @@
             /* Restricción de aspecto 9:16 para PC */
             max-width: 56.25vh; 
             background-color: #000;
-            /* Imagen de fondo solicitada */
-            background-image: url('https://raw.githubusercontent.com/TicketegBOL/celina/main/fondo.jpg'); 
+            /* Imagen de fondo solicitada (Placeholder para demo) */
+            background-image: url('fondo.jpg'); 
             background-size: cover;
-            background-position: center center; /* Centrado para que no se corte mal */
+            background-position: center center;
             box-shadow: 0 0 50px rgba(0,0,0,0.8);
             overflow: hidden;
         }
 
-        /* --- FIX PARA MÓVILES (Elimina barra negra superior) --- */
+        /* --- FIX PARA MÓVILES --- */
         @media (max-width: 768px) {
-            body {
-                display: block !important; /* Desactiva flex para evitar huecos verticales */
-            }
-            .pc-decoration {
-                display: none; /* Mejora rendimiento y evita parpadeos de fondo */
-            }
+            body { display: block !important; }
+            .pc-decoration { display: none; }
             .main-wrapper {
-                position: absolute; /* Fuerza posición al tope */
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100dvh;
-                max-width: none;
-                border: none;
-                box-shadow: none;
+                position: absolute; top: 0; left: 0;
+                width: 100%; height: 100dvh;
+                max-width: none; border: none; box-shadow: none;
             }
         }
-
-        /* Ajuste adicional para aspecto estricto */
         @media (max-aspect-ratio: 9/16) {
-            .main-wrapper {
-                width: 100vw;
-                max-width: none;
-                height: 100dvh;
-                border: none;
-            }
+            .main-wrapper { width: 100vw; max-width: none; height: 100dvh; border: none; }
         }
 
         /* --- PARTICULAS & DECORACIÓN --- */
@@ -97,20 +81,14 @@
         }
 
         .particle {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.6;
+            position: absolute; border-radius: 50%; opacity: 0.6;
             animation: floatParticle 10s infinite linear;
         }
 
         .party-icon {
-            position: absolute;
-            font-size: 24px;
-            top: -50px;
+            position: absolute; font-size: 24px; top: -50px;
             animation: dropAndFloat 8s infinite ease-in-out;
-            opacity: 0.9;
-            z-index: 5;
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+            opacity: 0.9; z-index: 5; filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
         }
 
         @keyframes floatParticle {
@@ -130,269 +108,270 @@
         /* --- SISTEMA DE PÁGINAS --- */
         .page-view {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; flex-direction: column;
-            overflow-y: auto;
+            display: flex; flex-direction: column; overflow-y: auto;
             background: rgba(255,255,255,0.95);
             opacity: 0; visibility: hidden; pointer-events: none;
         }
 
         #view-home {
-            background: transparent;
-            overflow: hidden; pointer-events: auto; opacity: 1; visibility: visible;
+            background: transparent; overflow: hidden; pointer-events: auto; opacity: 1; visibility: visible;
         }
 
         /* Fondo específico para Menú Celina */
         #view-menu {
-            /* Fondo visible para Celina */
-            background: linear-gradient(rgba(255,255,255,0.0), rgba(255,255,255,0.0)), 
+            /* Fondo para Celina (Placeholder) */
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), 
                         url('fondocelina2.jpg');
-            background-size: cover;
-            background-position: center;
+            background-size: cover; background-position: center;
         }
+        
+        /* EDITADO: ALINEACIÓN A LA IZQUIERDA */
         #view-menu .inner-content {
-            background: transparent;
-            backdrop-filter: blur(0px);
+            background: transparent; backdrop-filter: blur(0px);
             width: 100%; height: 100%;
-            display: flex; flex-direction: column; justify-content: center; items-center;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: flex-start; /* ALINEACIÓN A LA IZQUIERDA */
+            padding-left: 10%; /* ESPACIO A LA IZQUIERDA */
+            padding-right: 5%;
         }
 
         /* Fondo Valentina */
-        #view-valentina {
-            background-color: #000;
-            color: #fff;
-        }
+        #view-valentina { background-color: #000; color: #fff; }
 
-        /* --- NUEVOS BOTONES NEÓN INTERMITENTE (HOME) --- */
-        /* Ajustados para escalar con la altura (vh) y mantenerse fijos en posición */
-        @keyframes neonPulseGold {
-            0%, 100% { box-shadow: 0 0 0.5vh var(--gold), inset 0 0 0.5vh var(--gold); border-color: rgba(255, 215, 0, 0.6); }
-            50% { box-shadow: 0 0 2vh var(--gold), inset 0 0 1vh var(--gold); border-color: var(--gold); }
-        }
-
-        @keyframes neonPulseFuchsia {
-            0%, 100% { box-shadow: 0 0 0.5vh var(--fuchsia), inset 0 0 0.5vh var(--fuchsia); border-color: rgba(255, 0, 255, 0.6); }
-            50% { box-shadow: 0 0 2vh var(--fuchsia), inset 0 0 1vh var(--fuchsia); border-color: var(--fuchsia); }
-        }
-
+        /* --- ESTILOS DE BOTONES PRINCIPALES --- */
         .neon-btn {
             position: absolute;
-            /* La posición left/top ahora se define individualmente en cada ID */
+            width: 70%; /* Más anchos */
+            height: 8vh; /* Altura fija considerable */
+            display: flex;
+            align-items: center;
+            justify-content: center;
             
-            /* Ancho y medidas relativas a la altura para mantener proporción */
-            width: 50%; 
-            padding: 1.2vh 0; 
+            background: rgba(0, 0, 0, 0.85); /* Fondo oscuro sólido */
             
-            text-align: center;
+            /* Tipografía Grande y Gruesa */
+            font-family: 'Playfair Display', serif;
             text-transform: uppercase;
-            font-weight: 800;
-            letter-spacing: 0.2vh;
-            font-size: 1.8vh; /* Tamaño de fuente relativo a la altura */
-            
+            font-weight: 900; /* Extra Bold */
+            letter-spacing: 0.1vh;
+            font-size: 2.8vh; /* Texto grande que llena el botón */
             color: #fff;
             
-            /* Transparencia y Bordes */
-            background: rgba(0, 0, 0, 0.1); /* Casi invisible */
-            backdrop-filter: blur(1px);
-            border: 0.2vh solid;
-            border-radius: 5vh;
+            /* Rectángulo con bordes ligeros */
+            border-radius: 12px;
+            border: 3px solid; /* Borde grueso */
             
             cursor: pointer;
-            text-decoration: none;
             z-index: 50;
-            text-shadow: 0 0 5px rgba(0,0,0,0.8);
-            transition: transform 0.3s ease;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.9);
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
         .neon-btn:active {
             transform: translate(-50%, -50%) scale(0.95);
         }
 
-        /* POSICIONES AJUSTADAS A LA IMAGEN (EDITAR AQUI) */
+        /* Botón Celina (Dorado) - SE MANTIENE A LA DERECHA (HOME) */
         #btn-celina {
-            /* === COORDENADAS X / Y (AJUSTA AQUÍ) === */
-            left: 50%; /* X: 0% izquierda, 100% derecha */
-            top: 76%;  /* Y: 0% arriba, 100% abajo */
-            transform: translate(-50%, -50%); /* Mantiene el botón centrado en el punto */
-            /* ======================================= */
-
-            animation: neonPulseGold 2.5s infinite ease-in-out;
-            color: #fff;
+            width: 300px;   /* 👈 ajusta aquí */
+            height: 60px;   /* opcional */
+            left: 50%; /* Mantenido */
+            top: 76%;
+            transform: translate(-50%, -50%);
+            border-color: var(--gold);
+            box-shadow: 0 0 15px var(--gold), inset 0 0 10px rgba(255, 215, 0, 0.3);
+            animation: pulseGoldBorder 2s infinite ease-in-out;
         }
 
+        /* Botón Valentina (Fucsia) - SE MANTIENE A LA DERECHA (HOME) */
         #btn-valentina {
-            /* === COORDENADAS X / Y (AJUSTA AQUÍ) === */
-            left: 50%;
-            top: 88%;
+            width: 200px;   /* 👈 ajusta aquí */
+            height: 60px;   /* opcional */
+            left: 50%; /* Mantenido */
+            top: 86%;
             transform: translate(-50%, -50%);
+            border-color: var(--fuchsia);
+            box-shadow: 0 0 15px var(--fuchsia), inset 0 0 10px rgba(255, 0, 255, 0.3);
+            animation: pulseFuchsiaBorder 2s infinite ease-in-out;
+            animation-delay: 1s;
+        }
 
-            width: 48%;           /* controla el ancho */
-            padding: 6.5% 0;        /* 🔥 controla la altura con % */
-
-            font-size: 1.6vh;
-            animation: neonPulseFuchsia 2.5s infinite ease-in-out;
-            animation-delay: 1.25s;
-            color: #fff;
+        @keyframes pulseGoldBorder {
+            0%, 100% { box-shadow: 0 0 10px var(--gold), inset 0 0 5px rgba(255,215,0,0.2); }
+            50% { box-shadow: 0 0 25px var(--gold), inset 0 0 15px rgba(255,215,0,0.4); }
+        }
+        @keyframes pulseFuchsiaBorder {
+            0%, 100% { box-shadow: 0 0 10px var(--fuchsia), inset 0 0 5px rgba(255,0,255,0.2); }
+            50% { box-shadow: 0 0 25px var(--fuchsia), inset 0 0 15px rgba(255,0,255,0.4); }
         }
 
         /* --- BOTONES MENÚ INTERNO CELINA --- */
         .menu-btn {
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             color: #fff;
-            width: 80%;
-            margin: 1vh auto;
-            padding: 1.5vh;
+            width: 100%; /* Ocupan el ancho del contenedor */
+            margin: 0.8vh 0; /* Margen vertical */
+            padding: 1.8vh;
             text-align: center;
-            border-radius: 5vh;
-            font-weight: 600;
+            border-radius: 12px;
+            font-weight: 700;
             letter-spacing: 2px;
-            font-size: 1.5vh;
+            font-size: 1.6vh;
             transition: 0.3s;
-            box-shadow: 0 0.5vh 2vh rgba(0,0,0,0.2);
+            box-shadow: 0 0.5vh 2vh rgba(0,0,0,0.4);
             cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.2);
             position: relative;
             opacity: 0; 
-            transform: translateY(20px); 
+            transform: translateX(-20px); /* Entrada desde la izquierda */
+            text-transform: uppercase;
         }
         .menu-btn:hover {
             background: #fff;
             color: #000;
             border-color: var(--gold);
             box-shadow: 0 0 2vh var(--gold);
-            transform: scale(1.05) !important;
+            transform: translateX(10px) !important; /* Efecto hover */
         }
 
-        /* --- COMPONENTES VALENTINA (CORAZÓN MEJORADO) --- */
-        .heart-container {
-            width: 18vh; height: 18vh;
-            margin: 0 auto 2vh auto;
+        /* --- CARRUSEL MEJORADO (GSAP) --- */
+        .carousel-wrapper {
             position: relative;
-            filter: drop-shadow(0 0 1.5vh var(--fuchsia));
-            animation: pulseHeart 3s infinite ease-in-out;
-        }
-        
-        .heart-img {
-            width: 100%; height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80'); /* Foto ejemplo */
-            background-size: cover; 
-            background-position: center;
-            /* Clip path forma de corazón standard */
-            clip-path: path("M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z");
-            /* Transformación para ajustar el path al contenedor si es necesario, 
-               pero path usa coordenadas SVG 0-24. Mejor usar polygon o imagen SVG mask para responsive 100%. 
-               Usaremos mask-image para mayor compatibilidad responsive */
-            clip-path: none;
-            -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>");
-            mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>");
-            -webkit-mask-size: contain;
-            mask-size: contain;
-            -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-            -webkit-mask-position: center;
-            mask-position: center;
-            background-color: #fff; /* Fallback */
-        }
-
-        @keyframes pulseHeart {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        /* --- UI COMPONENTES --- */
-        .back-btn-small {
-            position: absolute; top: 20px; left: 20px;
-            background: rgba(0,0,0,0.3);
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; z-index: 50; color: #fff;
-            transition: 0.3s;
-        }
-        .back-btn-small:hover { background: rgba(0,0,0,0.6); }
-
-        .back-btn-bottom {
-            position: absolute;
-            bottom: 4vh; 
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.9);
-            color: #fff;
-            padding: 1.5vh 4vh;
-            border-radius: 50px;
-            border: 1px solid var(--gold);
-            cursor: pointer;
-            z-index: 60;
+            width: 100%;
+            height: 60vh;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 1.2vh;
+            justify-content: center;
+            overflow: hidden;
+            margin-top: 2vh;
+        }
+        
+        .carousel-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            opacity: 0;
+            position: absolute;
+        }
+
+        .carousel-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid #fff;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .nav-btn {
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: 1px solid white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: 0.3s;
+        }
+        .nav-btn:hover { background: white; color: black; }
+
+        /* --- COMPONENTES GENERICOS --- */
+        .back-btn-bottom {
+            position: absolute; bottom: 4vh; left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.9); color: #fff;
+            padding: 1.5vh 4vh; border-radius: 50px;
+            border: 1px solid var(--gold);
+            cursor: pointer; z-index: 60;
+            display: flex; align-items: center; gap: 10px;
+            font-weight: bold; text-transform: uppercase;
+            letter-spacing: 2px; font-size: 1.2vh;
             box-shadow: 0 4px 20px rgba(0,0,0,0.6);
             transition: 0.3s all;
         }
         .back-btn-bottom:hover {
-            background: var(--gold);
-            color: #000;
+            background: var(--gold); color: #000;
             transform: translateX(-50%) scale(1.05);
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
         }
 
-        /* BOTON MUSICA */
+        /* Heart Valentina */
+        .heart-container {
+            width: 18vh; height: 18vh; margin: 0 auto 2vh auto; position: relative;
+            filter: drop-shadow(0 0 1.5vh var(--fuchsia));
+            animation: pulseHeart 3s infinite ease-in-out;
+        }
+        .heart-img {
+            width: 100%; height: 100%;
+            background-image: url('mama.jpg');
+            background-size: cover; background-position: center;
+            -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>");
+            mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>");
+            -webkit-mask-size: contain; mask-size: contain;
+            -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+            -webkit-mask-position: center; mask-position: center;
+            background-color: #fff;
+        }
+        @keyframes pulseHeart { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        /* Music Control */
         .music-control {
-            position: absolute; top: 20px; right: 20px;
-            width: 40px; height: 40px;
-            background: rgba(255, 215, 0, 0.2);
-            border: 2px solid var(--gold);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: var(--gold);
-            z-index: 100; cursor: pointer;
+            position: absolute; top: 20px; right: 20px; width: 40px; height: 40px;
+            background: rgba(255, 215, 0, 0.2); border: 2px solid var(--gold);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: var(--gold); z-index: 100; cursor: pointer;
             box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
             animation: pulseMusic 2s infinite;
         }
         @keyframes pulseMusic { 0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); } }
 
-        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 20px; }
-        .gallery-item { 
-            width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; 
-            cursor: pointer; transition: 0.3s; 
-            opacity: 0; 
-        }
-        
-        #lightbox {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 100;
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none;
-        }
-        #lightbox.active { opacity: 1; pointer-events: auto; }
-        #lightbox img { max-width: 90%; max-height: 80%; border: 2px solid #fff; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
-
         /* FOOTER ANIMADO */
         .footer { 
-            margin-top: auto; padding: 10px; text-align: center; 
-            background: transparent; color: rgba(255,255,255,0.5); 
+            padding: 10px; text-align: center; 
+            background: transparent; color: rgba(255,255,255,0.7); 
             font-size: 1vh; text-transform: uppercase; letter-spacing: 2px;
             z-index: 20; position: relative;
         }
-        .footer a {
-            color: inherit; text-decoration: none; font-weight: bold;
-            display: inline-block;
-            animation: footerPulse 2s infinite ease-in-out;
-            transition: 0.3s;
-        }
-        .footer a:hover {
-            color: var(--gold);
-            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-            animation: none;
+        
+        @keyframes glowText {
+            0%, 100% { text-shadow: 0 0 5px rgba(255, 255, 255, 0.3); opacity: 0.7; }
+            50% { text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 20px var(--gold); opacity: 1; }
         }
 
-        @keyframes footerPulse {
-            0%, 100% { opacity: 0.5; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
+        .footer-link {
+            color: inherit; text-decoration: none; font-weight: bold;
+            display: inline-block;
+            animation: glowText 2.5s infinite ease-in-out;
         }
         
         ::-webkit-scrollbar { width: 0px; background: transparent; }
@@ -408,7 +387,6 @@
     <div class="pc-decoration"></div>
 
     <div class="main-wrapper">
-        <!-- Control de Música (Siempre visible en todas las páginas) -->
         <div class="music-control" onclick="toggleMusic()">
             <i class="fas fa-music" id="music-icon"></i>
         </div>
@@ -418,46 +396,48 @@
         <!-- VISTA: HOME -->
         <div id="view-home" class="page-view" style="pointer-events: auto; opacity: 1; visibility: visible;">
             
-            <!-- Botón 1: Celina (Invitación) - Ajustado al Trapecio -->
+            <!-- Botón 1: Celina - MANTENIDO A LA DERECHA -->
             <div id="btn-celina" class="neon-btn" onclick="goToMenu()">
-                INVITACIÓN
+                CELINA
             </div>
 
-            <!-- Botón 2: Valentina (Cumpleaños) - Ajustado al nombre -->
+            <!-- Botón 2: Valentina - MANTENIDO A LA DERECHA -->
             <div id="btn-valentina" class="neon-btn" onclick="navigateTo('view-valentina')">
-                
+                VALENTINA
             </div>
 
             <div class="footer" style="position: absolute; bottom: 1vh; width: 100%;">
-                <a href="https://wa.me/59165620007?text=Buenas%20Estoy%20interesado%20en%20las%20invitaciones%20digitales!" target="_blank">
+                <a href="https://wa.me/59165620007?text=Buenas%20Estoy%20interesado%20en%20las%20invitaciones%20digitales!" target="_blank" class="footer-link">
                     HUNTERDESIGNER
                 </a>
             </div>
         </div>
 
-        <!-- VISTA: MENÚ CELINA -->
+        <!-- VISTA: MENÚ CELINA (EDITADO: IZQUIERDA) -->
         <div id="view-menu" class="page-view">
             <div class="inner-content">
-                <div class="text-center mb-6">
-                    <h1 class="text-5xl font-bold mb-2 text-gray-800 font-[Playfair_Display]">Celina</h1>
-                    <p class="text-gray-500 tracking-widest text-sm">MIS 15 AÑOS</p>
+                <!-- TITULO ALINEADO A LA IZQUIERDA -->
+                <div class="text-left mb-6 drop-shadow-lg w-full max-w-xs">
+                    <h1 class="text-6xl font-black mb-2 text-white font-[Playfair_Display] drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]">Celina</h1>
+                    <p class="text-white font-bold tracking-[0.3em] text-md drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] uppercase">Mi Cumpleaños</p>
                 </div>
                 
+                <!-- BOTONES ALINEADOS A LA IZQUIERDA -->
                 <div class="flex flex-col w-full max-w-xs gap-2 z-10" id="celina-btn-container">
                     <button onclick="navigateTo('view-details')" class="menu-btn">INVITACIÓN</button>
                     <button onclick="navigateTo('view-location')" class="menu-btn">UBICACIÓN</button>
                     <button onclick="navigateTo('view-gallery')" class="menu-btn">GALERÍA</button>
                     <button onclick="navigateTo('view-video')" class="menu-btn">VIDEO</button>
-                    <a href="https://wa.me/59165620007?text=Hola,%20quiero%20confirmar%20mi%20asistencia" target="_blank" class="menu-btn" style="background: #25D366; border-color: #25D366;">CONFIRMAR ASISTENCIA</a>
+                    <a href="https://wa.me/59175872927?text=Hola,%20quiero%20confirmar%20mi%20asistencia" target="_blank" class="menu-btn" style="background: rgba(37, 211, 102, 0.9); border-color: #25D366;">CONFIRMAR ASISTENCIA</a>
                     
-                    <!-- Botón Volver con Icono -->
-                    <button onclick="goBackToHome()" class="menu-btn bg-gray-300 !text-gray-800 mt-2 flex items-center justify-center gap-2">
+                    <button onclick="goBackToHome()" class="menu-btn bg-white !text-black mt-2 flex items-center justify-center gap-2">
                         <i class="fas fa-arrow-left"></i> VOLVER
                     </button>
                 </div>
 
-                <div class="footer w-full">
-                    <a href="https://wa.me/59165620007?text=Buenas%20Estoy%20interesado%20en%20las%20invitaciones%20digitales!" target="_blank">
+                <!-- FOOTER ABSOLUTO AL CENTRO (Para que no quede a la izquierda) -->
+                <div class="footer w-full absolute bottom-2 left-0 text-center">
+                    <a href="https://wa.me/59165620007?text=Buenas%20Estoy%20interesado%20en%20las%20invitaciones%20digitales!" target="_blank" class="footer-link">
                         HUNTERDESIGNER
                     </a>
                 </div>
@@ -466,47 +446,50 @@
 
         <!-- VISTA: VALENTINA -->
         <div id="view-valentina" class="page-view">
-            <div class="back-btn-small" onclick="goBackToHome()"><i class="fas fa-arrow-left"></i></div>
             <div class="flex flex-col items-center justify-center h-full p-6 text-center">
                 
-                <!-- Foto en forma de corazón -->
                 <div class="heart-container">
                     <div class="heart-img"></div>
                 </div>
 
-                <h1 class="text-4xl font-[Playfair_Display] text-[#ff00ff] mb-2">Valentina</h1>
-                <p class="text-gray-400 uppercase tracking-widest text-xs mb-8">Te invito a mi cumpleaños</p>
+                <h1 class="text-5xl font-[Playfair_Display] font-bold text-[#ff00ff] mb-2 drop-shadow-[0_0_10px_rgba(255,0,255,0.5)]"></h1>
+                <p class="text-xl font-[\'Allura\'] text-gray-600 leading-relaxed">Aprovechando tambien el cumpleaños de celina , tambien festejaremos el mio</p>
 
-                <div class="bg-gray-900 border border-gray-800 p-6 rounded-lg w-full shadow-2xl">
+                <div class="bg-gray-900 border border-gray-800 p-6 rounded-lg w-full shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#ff00ff] to-transparent"></div>
                     <p class="text-white font-bold text-lg mb-1">FECHA</p>
-                    <p class="text-fuchsia-400 text-sm mb-4">Sábado 24 de Agosto</p>
+                    <p class="text-fuchsia-400 text-sm mb-4">Domingo 8 de febrero</p>
                     
                     <div class="w-full h-[1px] bg-gray-800 mb-4"></div>
 
                     <p class="text-white font-bold text-lg mb-1">LUGAR</p>
-                    <p class="text-gray-400 text-sm mb-4">Salón de Eventos "El Palacio"</p>
+                    <p class="text-gray-400 text-sm mb-4">Salón de Eventos "BURANO"</p>
                     
-                    <a href="https://maps.app.goo.gl/6vUnDNdtYt7A6uY39" target="_blank" class="text-xs text-[#40e0d0] border border-[#40e0d0] px-3 py-1 rounded hover:bg-[#40e0d0] hover:text-black transition">VER UBICACIÓN</a>
+                    <a href="https://maps.app.goo.gl/6vUnDNdtYt7A6uY39" target="_blank" class="text-xs text-[#40e0d0] border border-[#40e0d0] px-4 py-2 rounded hover:bg-[#40e0d0] hover:text-black transition uppercase font-bold">Ver Ubicación</a>
                 </div>
 
-                <a href="https://wa.me/59165620007?text=Confirmo%20para%20Valentina" class="mt-8 text-sm text-gray-500 hover:text-white transition">CONFIRMAR ASISTENCIA</a>
+                <a href="https://wa.me/59175872927?text=Hola,%20quiero%20confirmar%20mi%20asistencia" class="mt-8 text-sm text-gray-500 hover:text-white transition uppercase border-b border-gray-700 pb-1">Confirmar Asistencia</a>
+            </div>
+
+            <!-- BOTÓN VOLVER ABAJO -->
+            <div class="back-btn-bottom" onclick="goBackToHome()">
+                <i class="fas fa-undo-alt"></i> VOLVER
             </div>
         </div>
 
         <!-- VISTA: DETALLE (Celina) -->
         <div id="view-details" class="page-view">
             <div class="flex flex-col items-center justify-center h-full p-8 text-center bg-[url('https://www.transparenttextures.com/patterns/diamond-upholstery.png')]">
-                <h2 class="text-3xl text-[#d4af37] mb-6 font-[Playfair_Display]">Estás Invitado</h2>
-                <div class="bg-white p-8 shadow-2xl rounded-lg border border-gray-100">
-                    <p class="text-gray-500 uppercase tracking-widest text-xs mb-2">Celebra con nosotros</p>
-                    <h1 class="text-5xl font-serif mb-4">Celina</h1>
-                    <div class="w-16 h-1 bg-[#d4af37] mx-auto mb-6"></div>
-                    <p class="text-lg mb-2 font-bold">SÁBADO 24 DE AGOSTO</p>
-                    <p class="text-gray-600 italic">Salón de Eventos "El Palacio"</p>
+                <h2 class="text-4xl text-[#d4af37] mb-6 font-[Playfair_Display] font-bold drop-shadow-md">INVITACIÓN</h2>
+                <div class="bg-white/95 backdrop-blur-sm p-8 shadow-2xl rounded-xl border-2 border-double border-[#d4af37]">
+                    <p class="text-xl font-[\'Allura\'] text-gray-600 leading-relaxed">Con mucha alegría te invito a celebrar mi cumpleaños en familia. Será una noche especial llena de risas, amor y lindos recuerdos. Los espero para compartir, abrazarnos y brindar juntos por la vida este domingo tan esperado con todo cariño.</p>
+                    <h1 class="text-6xl font-serif mb-4 text-[#d4af37]">Celina</h1>
+                    <div class="w-24 h-1 bg-[#d4af37] mx-auto mb-6"></div>
+                    <p class="text-xl mb-2 font-black text-gray-800">SERA EL DOMINGO 8 DE FEBRERO</p>
+                    <p class="text-gray-600 italic">Salón de Eventos "Burano" Av. Simon Bolivar</p>
                 </div>
             </div>
             
-            <!-- Botón Volver Abajo Centro -->
             <div class="back-btn-bottom" onclick="navigateTo('view-menu')">
                 <i class="fas fa-undo-alt"></i> VOLVER
             </div>
@@ -515,35 +498,43 @@
         <!-- VISTA: UBICACIÓN (Celina) -->
         <div id="view-location" class="page-view">
             <div class="flex flex-col h-full">
-                <div class="h-1/3 flex items-center justify-center bg-gray-100 p-8 text-center">
+                <div class="h-1/3 flex items-center justify-center bg-gray-100 p-8 text-center relative shadow-lg z-10">
                     <div>
-                        <h2 class="text-2xl font-serif mb-2">Ubicación</h2>
+                        <h2 class="text-3xl font-serif mb-4 font-bold text-gray-800">Ubicación</h2>
                         <a href="https://maps.app.goo.gl/6vUnDNdtYt7A6uY39" target="_blank" 
-                           class="bg-[#d4af37] text-white px-6 py-3 rounded-full shadow-lg inline-flex items-center gap-2 font-bold">
-                           <i class="fas fa-map-marker-alt"></i> ABRIR MAPA
+                           class="bg-[#d4af37] text-white px-8 py-3 rounded-full shadow-lg inline-flex items-center gap-2 font-bold hover:bg-[#b8962e] transition text-sm tracking-wide">
+                           <i class="fas fa-map-marker-alt"></i> ABRIR EN GOOGLE MAPS
                         </a>
                     </div>
                 </div>
                 <div class="flex-grow w-full h-2/3 bg-gray-200">
-                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3825.592534884252!2d-68.1192935!3d-16.508892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTbCsDMwJzMyLjAiUyA2OMKwMDcnMDkuNSJX!5e0!3m2!1ses!2sbo!4v1620000000000" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                </div>
+                     <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d4298.719288449111!2d-68.125896!3d-16.500249999999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTbCsDMwJzAwLjkiUyA2OMKwMDcnMzMuMiJX!5e1!3m2!1ses-419!2sbo!4v1769959540577!5m2!1ses-419!2sbo" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                   
+                    </div>
             </div>
-
-            <!-- Botón Volver Abajo Centro -->
             <div class="back-btn-bottom" onclick="navigateTo('view-menu')">
                 <i class="fas fa-undo-alt"></i> VOLVER
             </div>
         </div>
 
-        <!-- VISTA: GALERÍA -->
-        <div id="view-gallery" class="page-view block">
-            <div class="sticky top-0 bg-white/90 backdrop-blur z-20 p-4 border-b flex items-center justify-center">
-                <h2 class="text-lg font-bold">GALERÍA</h2>
+        <!-- VISTA: GALERÍA (MEJORADA CON CARRUSEL) -->
+        <div id="view-gallery" class="page-view block bg-black">
+            <div class="sticky top-0 bg-black/80 backdrop-blur z-20 p-4 border-b border-gray-800 flex items-center justify-center">
+                <h2 class="text-lg font-bold text-[#d4af37] tracking-[0.2em]">GALERÍA</h2>
             </div>
-            <div class="gallery-grid" id="gallery-container"></div>
-            <div class="h-32"></div> <!-- Espaciador para que el botón flotante no tape fotos -->
+            
+            <!-- Carrusel Funcional -->
+            <div class="carousel-wrapper">
+                <div class="carousel-nav">
+                    <div class="nav-btn" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></div>
+                    <div class="nav-btn" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></div>
+                </div>
+                <!-- Las imágenes se inyectan con JS -->
+                <div id="carousel-track-inner" class="relative w-full h-full"></div>
+            </div>
+            
+            <p class="text-center text-gray-500 text-xs mt-4">Desliza o usa las flechas</p>
 
-            <!-- Botón Volver Abajo Centro -->
             <div class="back-btn-bottom" onclick="navigateTo('view-menu')">
                 <i class="fas fa-undo-alt"></i> VOLVER
             </div>
@@ -551,19 +542,13 @@
 
         <!-- VISTA: VIDEO -->
         <div id="view-video" class="page-view bg-black flex flex-col items-center justify-center">
-            <h2 class="text-white z-20 mb-4 font-serif text-2xl absolute top-10">Mis Recuerdos</h2>
-            <div class="relative w-[90%] h-[70%] rounded-2xl overflow-hidden shadow-2xl border border-gray-800 bg-black">
-                <iframe src="https://drive.google.com/file/d/1CXyqZH58jqgdm3h6oDsOfFQWXbOHPet9/preview" width="100%" height="100%" allow="autoplay"></iframe>
+            <h2 class="text-[#d4af37] z-20 mb-6 font-serif text-3xl font-bold absolute top-10">Mis Recuerdos</h2>
+            <div class="relative w-[90%] h-[60%] rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(255,215,0,0.2)] border border-gray-800 bg-black">
+                <iframe src="https://drive.google.com/file/d/1CXyqZH58jqgdm3h6oDsOfFQWXbOHPet9/preview" width="100%" height="100%" allow="autoplay" style="border:none;"></iframe>
             </div>
-
-            <!-- Botón Volver Abajo Centro -->
-            <div class="back-btn-bottom" onclick="navigateTo('view-menu')" style="background: rgba(255,255,255,0.2); backdrop-filter: blur(10px);">
+            <div class="back-btn-bottom" onclick="navigateTo('view-menu')" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
                 <i class="fas fa-undo-alt"></i> VOLVER
             </div>
-        </div>
-
-        <div id="lightbox" onclick="closeLightbox()">
-            <img id="lightbox-img" src="" alt="Zoom">
         </div>
 
     </div>
@@ -630,7 +615,6 @@
             const incoming = document.getElementById(targetId);
             if(outgoing === incoming) return;
 
-            // Bloquear clics mientras anima
             document.body.style.pointerEvents = 'none';
 
             // Animación Salida
@@ -640,24 +624,22 @@
                 incoming.style.visibility = 'visible';
                 incoming.style.pointerEvents = 'auto';
                 
-                // Animación Entrada General
+                // Animación Entrada
                 gsap.fromTo(incoming, { opacity: 0, scale: 1.05, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.5, clearProps: "transform", onComplete: () => { document.body.style.pointerEvents = 'auto'; }});
 
-                // EFECTO ESPECÍFICO: Si entramos al Menú Celina
                 if(targetId === 'view-menu') {
+                    // Animación específica para botones alineados a la izquierda
                     gsap.fromTo("#celina-btn-container .menu-btn", 
-                        { y: 30, opacity: 0 },
-                        { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: "power2.out" }
+                        { x: -30, opacity: 0 }, // Vienen de la izquierda
+                        { x: 0, opacity: 1, duration: 0.4, stagger: 0.1, ease: "power2.out" }
                     );
                 }
-
-                // EFECTO ESPECÍFICO: Si entramos a la Galería
+                
+                // Si entramos a la galería, iniciar/reiniciar carrusel
                 if(targetId === 'view-gallery') {
-                    // Animación de fotos en cascada
-                    gsap.fromTo(".gallery-item", 
-                        { y: 50, opacity: 0 },
-                        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "back.out(1.2)" }
-                    );
+                    startCarousel();
+                } else {
+                    stopCarousel();
                 }
             }});
             currentView = targetId;
@@ -668,15 +650,12 @@
         function goBackToHome() {
             const outgoing = document.getElementById(currentView);
             const incoming = document.getElementById('view-home');
-            
             document.body.style.pointerEvents = 'none';
 
             if (currentView === 'view-menu') {
+                // Animación de salida hacia la izquierda
                 gsap.to("#celina-btn-container .menu-btn", {
-                    opacity: 0,
-                    y: 20,
-                    duration: 0.2, 
-                    stagger: 0.05,
+                    opacity: 0, x: -20, duration: 0.2, stagger: 0.05,
                     onComplete: performSlideExit
                 });
             } else {
@@ -689,43 +668,93 @@
                     incoming.style.visibility = 'visible';
                     incoming.style.opacity = '1';
                     incoming.style.pointerEvents = 'auto';
-                    
                     gsap.set(outgoing, { x: 0, opacity: 1 });
-                    
                     document.body.style.pointerEvents = 'auto';
                 }});
             }
-            
             currentView = 'view-home';
+            stopCarousel();
         }
 
-        // --- GALERÍA ---
-        const galleryContainer = document.getElementById('gallery-container');
+        // --- LÓGICA DEL CARRUSEL ---
+        const carouselTrack = document.getElementById('carousel-track-inner');
         const photoUrls = [
-            'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=600&q=80',
-            'https://images.unsplash.com/photo-1496337589254-7e19d01cec44?auto=format&fit=crop&w=600&q=80',
-            'https://images.unsplash.com/photo-1530103862676-de3c9da59af7?auto=format&fit=crop&w=600&q=80',
-            'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80',
-            'https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=600&q=80',
-            'https://images.unsplash.com/photo-1514525253440-b393452e8d26?auto=format&fit=crop&w=600&q=80'
+            '1.jpeg',
+            '2.jpeg',
+            '3.jpeg',
+            '4.jpeg',
+            '5.jpeg',
+            '6.jpeg',
+            '7.jpeg',
+            '8.jpeg',
+            '9.jpeg',
+            '10.jpeg',
+            '11.jpeg',
+            '12.jpeg'
         ];
 
+        let slides = [];
+        let currentSlideIndex = 0;
+        let carouselInterval;
+
+        // Inicializar imágenes
         photoUrls.forEach((url, index) => {
+            const div = document.createElement('div');
+            div.className = 'carousel-slide';
+            // Solo la primera es visible al inicio
+            if(index !== 0) gsap.set(div, { autoAlpha: 0 });
+            
             const img = document.createElement('img');
-            img.src = url; img.className = 'gallery-item'; img.onclick = () => openLightbox(url);
-            galleryContainer.appendChild(img);
+            img.src = url;
+            img.className = 'carousel-image';
+            
+            div.appendChild(img);
+            carouselTrack.appendChild(div);
+            slides.push(div);
         });
 
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        function openLightbox(url) {
-            lightboxImg.src = url; lightbox.classList.add('active');
-            gsap.fromTo(lightboxImg, {scale: 0.5, opacity: 0}, {scale: 1, opacity: 1, duration: 0.3, ease: "back.out(1.7)"});
+        function showSlide(index) {
+            if (index === currentSlideIndex) return;
+            
+            let nextSlide = slides[index];
+            let prevSlide = slides[currentSlideIndex];
+
+            // Animación
+            gsap.to(prevSlide, { autoAlpha: 0, scale: 0.9, duration: 0.5 });
+            gsap.fromTo(nextSlide, 
+                { autoAlpha: 0, scale: 1.1 }, 
+                { autoAlpha: 1, scale: 1, duration: 0.5 }
+            );
+
+            currentSlideIndex = index;
         }
-        function closeLightbox() {
-            gsap.to(lightboxImg, {scale: 0.5, opacity: 0, duration: 0.2, onComplete: () => lightbox.classList.remove('active')});
+
+        function nextSlide() {
+            let newIndex = (currentSlideIndex + 1) % slides.length;
+            showSlide(newIndex);
+            resetTimer();
         }
-        
+
+        function prevSlide() {
+            let newIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+            showSlide(newIndex);
+            resetTimer();
+        }
+
+        function startCarousel() {
+            stopCarousel();
+            carouselInterval = setInterval(nextSlide, 3500); // Cambio automático cada 3.5s
+        }
+
+        function stopCarousel() {
+            if(carouselInterval) clearInterval(carouselInterval);
+        }
+
+        function resetTimer() {
+            stopCarousel();
+            startCarousel();
+        }
+
         document.addEventListener('touchmove', function (event) { if (event.scale !== 1) event.preventDefault(); }, { passive: false });
     </script>
 </body>
