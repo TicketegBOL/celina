@@ -448,8 +448,8 @@
                     
                     <a href="https://maps.app.goo.gl/6vUnDNdtYt7A6uY39" target="_blank" class="text-xs text-[#40e0d0] border border-[#40e0d0] px-4 py-2 rounded hover:bg-[#40e0d0] hover:text-black transition uppercase font-bold">Ver Ubicación</a>
                 </div>
-
-                <a href="https://wa.me/59175872927?text=Hola,%20quiero%20confirmar%20mi%20asistencia" class="mt-2 text-sm text-gray-500 hover:text-white transition uppercase border-b border-gray-700 pb-1">Confirmar Asistencia</a>
+                
+                <!-- ELIMINADO BOTÓN CONFIRMAR ASISTENCIA AQUÍ -->
             </div>
 
             <!-- BOTÓN VOLVER ABAJO -->
@@ -526,10 +526,13 @@
 
         <!-- VISTA: VIDEO -->
         <div id="view-video" class="page-view bg-black flex flex-col items-center justify-center">
-            <h2 class="text-[#d4af37] z-20 mb-6 font-serif text-3xl font-bold absolute top-10">Mis Recuerdos</h2>
-            <div class="relative w-[90%] h-[60%] rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(255,215,0,0.2)] border border-gray-800 bg-black">
+            <h2 class="text-[#d4af37] z-20 mb-6 font-serif text-3xl font-bold absolute top-6">Mis Recuerdos</h2>
+            
+            <!-- VIDEO AJUSTADO: 9:16 Aspect Ratio, ocupa aprox 80% altura vertical, centrado -->
+            <div class="relative h-[80vh] aspect-[9/16] max-w-full rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(255,215,0,0.2)] border border-gray-800 bg-black mt-4">
                 <iframe src="https://drive.google.com/file/d/1CXyqZH58jqgdm3h6oDsOfFQWXbOHPet9/preview" width="100%" height="100%" allow="autoplay" style="border:none;"></iframe>
             </div>
+            
             <div class="back-btn-bottom" onclick="navigateTo('view-menu')" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
                 <i class="fas fa-undo-alt"></i> VOLVER
             </div>
