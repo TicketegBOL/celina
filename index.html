@@ -421,21 +421,20 @@
 
         <!-- VISTA: VALENTINA -->
         <div id="view-valentina" class="page-view">
-            <!-- Padding bottom 32 (8rem) para asegurar espacio sobre el botón volver -->
-            <div class="flex flex-col items-center justify-start pt-10 h-full px-6 text-center pb-32 overflow-y-auto">
+            <!-- CAMBIO 1: pt-10 reducido a pt-6. Padding bottom aumentado a pb-48 para asegurar scroll -->
+            <div class="flex flex-col items-center justify-start pt-6 h-full px-6 text-center pb-48 overflow-y-auto">
                 
                 <div class="heart-container mb-4">
                     <div class="heart-img"></div>
                 </div>
 
-                <!-- Texto blanco y debajo del corazón -->
-                  
-                <p class="text-[22px] font-['Allura'] text-white leading-relaxed mb-6 px-4">
-                    <br><br>
-                    Aprovechando también el cumpleaños de celina, también festejaremos el mío
+                <!-- CAMBIO 2: Eliminados los <br><br> para ganar espacio, añadido mt-2 -->
+                <p class="text-[22px] font-['Allura'] text-white leading-relaxed mb-6 mt-2 px-4">
+                    Aprovechando también el cumpleaños de Celina, también festejaremos el mío
                 </p>
                 
-                <div class="bg-gray-900 border border-gray-800 p-6 rounded-lg w-full shadow-2xl relative overflow-hidden mb-6">
+                <!-- CAMBIO 3: shrink-0 añadido para evitar que la tarjeta se encoja -->
+                <div class="bg-gray-900 border border-gray-800 p-6 rounded-lg w-full shadow-2xl relative overflow-hidden mb-6 shrink-0">
                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#ff00ff] to-transparent"></div>
                     
                     <p class="text-white font-bold text-lg mb-1">FECHA</p>
@@ -446,7 +445,7 @@
                     <p class="text-white font-bold text-lg mb-1">LUGAR</p>
                     <p class="text-gray-400 text-sm mb-4">Salón de Eventos "BURANO"</p>
                     
-                    <a href="https://maps.app.goo.gl/6vUnDNdtYt7A6uY39" target="_blank" class="text-xs text-[#40e0d0] border border-[#40e0d0] px-4 py-2 rounded hover:bg-[#40e0d0] hover:text-black transition uppercase font-bold">Ver Ubicación</a>
+                    <a href="https://maps.app.goo.gl/6vUnDNdtYt7A6uY39" target="_blank" class="text-xs text-[#40e0d0] border border-[#40e0d0] px-4 py-2 rounded hover:bg-[#40e0d0] hover:text-black transition uppercase font-bold inline-block">Ver Ubicación</a>
                 </div>
                 
                 <!-- ELIMINADO BOTÓN CONFIRMAR ASISTENCIA AQUÍ -->
